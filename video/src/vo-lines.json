@@ -1,0 +1,97 @@
+{
+  "hook": {
+    "say": "Be honest. Does every family dinner end with the same question? Where is all our tax money going?",
+    "text": "Be honest. Does every family dinner end with the same question… where is all our tax money going?",
+    "cap": false
+  },
+  "pain": {
+    "say": "We pay up to thirty percent tax. We still pay for our own water, security and schools. And we get zero say, in how a single rupee is spent.",
+    "text": "We pay up to 30% tax. We still pay for our own water, security and schools. And we get zero say in how a single rupee is spent.",
+    "cap": true
+  },
+  "whatif": {
+    "say": "What if, you could choose?",
+    "text": "What if you could choose?",
+    "cap": false
+  },
+  "wishes": {
+    "say": "A jogging track in your neighbourhood park. E V chargers, because you're betting big on electric. Garbage trucks that actually show up. Or, India's own chip labs.",
+    "text": "A jogging track in your neighbourhood park. EV chargers, because you're betting big on electric. Garbage trucks that actually show up. Or India's own chip labs.",
+    "cap": false
+  },
+  "meet": {
+    "say": "Meet Nirmaan. Your tax. Your say.",
+    "text": "Meet Nirmaan. Your tax. Your say.",
+    "cap": false
+  },
+  "ninety": {
+    "say": "Now, not every rupee can be opened up. Defence. Interest. The states' share. That ninety percent, keeps India running.",
+    "text": "Now, not every rupee can be opened up. Defence, interest, the states' share: that 90% keeps India running.",
+    "cap": true
+  },
+  "ten": {
+    "say": "But the debatable slice, could be decided by the people who pay for it. Nirmaan starts with ten percent.",
+    "text": "But the debatable slice could be decided by the people who pay for it. Nirmaan starts with 10%.",
+    "cap": true
+  },
+  "start": {
+    "say": "Say you pay eight lakh rupees in income tax. Nirmaan tears off your ten percent. Eighty thousand rupees, yours to direct.",
+    "text": "Say you pay ₹8 lakh in income tax. Nirmaan tears off your 10%: ₹80,000, yours to direct.",
+    "cap": true
+  },
+  "browse": {
+    "say": "Browse projects on your street, in your state, and across India. Back the jogging loop by your lake. Fast chargers for the nation. Garbage trucks for your ward. And India's chip labs.",
+    "text": "Browse projects on your street, in your state and across India. Back the jogging loop by your lake, fast chargers for the nation, garbage trucks for your ward, and India's chip labs.",
+    "cap": true
+  },
+  "split": {
+    "say": "Split it however you like. No quotas.",
+    "text": "Split it however you like. No quotas.",
+    "cap": false
+  },
+  "mint": {
+    "say": "Hit confirm, and your money is minted as purpose-bound e rupee. Digital rupees, that can only be spent on the project you picked.",
+    "text": "Hit confirm, and your money is minted as purpose-bound e-Rupee: digital rupees that can only be spent on the project you picked.",
+    "cap": true
+  },
+  "metro": {
+    "say": "Then, the best part. Watch your money ride the Money Metro. Wallet. Escrow. Agency. Vendor. Until your project goes live. Every hop, on a public ledger. Every milestone, with geotagged proof.",
+    "text": "Then, the best part. Watch your money ride the Money Metro: wallet, escrow, agency, vendor… until your project goes live. Every hop on a public ledger. Every milestone with geotagged proof.",
+    "cap": true
+  },
+  "pitch": {
+    "say": "Don't see your idea? Pitch it. Turn it into a campaign, share it with your society group and your running club, and rally verified vouches.",
+    "text": "Don't see your idea? Pitch it. Turn it into a campaign, share it with your society group and your running club, and rally verified vouches.",
+    "cap": true
+  },
+  "loop": {
+    "say": "So when the government plans next year's budget, there's already a ranked list of what India's taxpayers want built. That's the feedback loop.",
+    "text": "So when the government plans next year's budget, there's already a ranked list of what India's taxpayers want built. That's the feedback loop.",
+    "cap": true
+  },
+  "govt": {
+    "say": "For the government, it means transparent governance, and the trust of the generation that pays for it.",
+    "text": "For the government, it means transparent governance, and the trust of the generation that pays for it.",
+    "cap": true
+  },
+  "you": {
+    "say": "For you, it's the pride of knowing you're not just paying for India. You're building it.",
+    "text": "For you, it's the pride of knowing you're not just paying for India. You're building it.",
+    "cap": false
+  },
+  "edge": {
+    "say": "I know. It's a far-fetched idea, and you're probably already thinking of ten edge cases. Good. Shoot them my way.",
+    "text": "I know, it's a far-fetched idea, and you're probably already thinking of ten edge cases. Good. Shoot them my way.",
+    "cap": false
+  },
+  "public": {
+    "say": "I'm building this in public, and your feedback shapes what comes next. Try it. Break it. Tell me what you think.",
+    "text": "I'm building this in public, and your feedback shapes what comes next. Try it. Break it. Tell me what you think.",
+    "cap": false
+  },
+  "end": {
+    "say": "Nirmaan. Your tax. Your say.",
+    "text": "Nirmaan. Your tax. Your say.",
+    "cap": false
+  }
+}
