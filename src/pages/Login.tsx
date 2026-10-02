@@ -21,7 +21,7 @@ export default function Login() {
     if (step !== 'fetching') return
     const t = setTimeout(() => {
       login(pan)
-      navigate('/you')
+      navigate('/promo/you')
     }, 2200)
     return () => clearTimeout(t)
   }, [step, pan, login, navigate])

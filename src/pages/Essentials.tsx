@@ -8,17 +8,18 @@ import { useStore } from '../store'
 import { compact, crore, rupees } from '../lib/format'
 
 export default function Essentials() {
-  const { tax } = useStore()
+  const { taxPaid, budget } = useStore()
   const [active, setActive] = useState<string | null>('states')
-  if (!tax) return null
-  const base = tax.essential
+  if (!taxPaid) return null
+  const base = taxPaid - budget
   const sel = RUPEE_GOES_TO.find((h) => h.id === active) ?? RUPEE_GOES_TO[0]
 
   return (
     <div>
       <PageHeader
-        eyebrow="The 90% · Essentials"
-        title="Where your 90% goes"
+        eyebrow="The other 90% · Essentials"
+        dot="#3D5AFE"
+        title={<>Where your <span className="text-chakra">90%</span> goes</>}
         sub={
           <>
             Your <strong className="text-ink">{rupees(base)}</strong> mapped onto the Union Budget {BUDGET_YEAR}: how every rupee of central spending
@@ -26,14 +27,14 @@ export default function Essentials() {
           </>
         }
         right={
-          <Pill soft="#E8ECFB" color="#2B4ACB">
+          <Pill soft="#E2E7FF">
             <Database className="h-3.5 w-3.5" /> Union Budget {BUDGET_YEAR} · BE
           </Pill>
         }
       />
 
       <div className="grid gap-4 lg:grid-cols-[1fr_1.1fr]">
-        <Card className="flex flex-col items-center p-6 sm:p-8">
+        <Card className="flex flex-col items-center p-6 sm:p-8" tone="sky">
           <Donut
             size={280}
             thickness={34}
@@ -55,18 +56,18 @@ export default function Essentials() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="mt-8 w-full rounded-2xl bg-paper p-5"
+              className="brut-sm mt-8 w-full rounded-2xl bg-white p-5"
             >
               <div className="flex items-center justify-between gap-3">
                 <h3 className="text-lg font-bold">{sel.label}</h3>
-                <span className="text-sm font-semibold" style={{ color: sel.color === '#0E1330' ? '#0E1330' : sel.color }}>
+                <span className="rounded-full border-[1.5px] border-ink px-2 py-0.5 font-mono text-xs font-bold" style={{ background: sel.color, color: sel.color === '#16130F' ? '#fff' : '#16130F' }}>
                   {sel.paise} paise / ₹1
                 </span>
               </div>
               <p className="mt-2 text-sm text-muted">{sel.blurb}</p>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {sel.examples.map((e) => (
-                  <span key={e} className="rounded-full bg-white px-2.5 py-1 text-xs font-medium">{e}</span>
+                  <span key={e} className="rounded-full border-[1.5px] border-ink bg-paper px-2.5 py-1 text-xs font-semibold">{e}</span>
                 ))}
               </div>
             </motion.div>
@@ -83,12 +84,12 @@ export default function Essentials() {
                   <button
                     onMouseEnter={() => setActive(h.id)}
                     onClick={() => setActive(h.id)}
-                    className={`flex w-full items-center gap-3 rounded-2xl px-3 py-3 text-left transition ${on ? 'bg-paper' : ''}`}
+                    className={`flex w-full items-center gap-3 rounded-2xl border-2 px-3 py-3 text-left transition ${on ? 'border-ink bg-marigold-soft' : 'border-transparent'}`}
                   >
-                    <span className="h-3 w-3 shrink-0 rounded-full" style={{ background: h.color }} />
+                    <span className="h-3.5 w-3.5 shrink-0 rounded-full border-[1.5px] border-ink" style={{ background: h.color }} />
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-sm font-semibold">{h.label}</span>
-                      <span className="mt-1.5 block h-1.5 overflow-hidden rounded-full bg-line">
+                      <span className="mt-1.5 block h-2.5 overflow-hidden rounded-full border-[1.5px] border-ink bg-white">
                         <motion.span
                           className="block h-full rounded-full"
                           style={{ background: h.color }}
@@ -114,7 +115,7 @@ export default function Essentials() {
         <Card className="p-6 lg:col-span-2">
           <h3 className="text-lg font-bold">Where the rupee comes from</h3>
           <p className="mt-1 text-sm text-muted">Income tax payers fund 21 paise of every rupee the Centre raises. That's you.</p>
-          <div className="mt-5 flex h-10 overflow-hidden rounded-xl">
+          <div className="mt-5 flex h-11 overflow-hidden rounded-xl border-2 border-ink">
             {RUPEE_COMES_FROM.map((r, i) => (
               <motion.div
                 key={r.label}
@@ -122,11 +123,11 @@ export default function Essentials() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: i * 0.05 }}
-                className="flex items-center justify-center border-r-2 border-white text-[11px] font-bold last:border-r-0"
+                className="flex items-center justify-center border-r-2 border-ink text-[11px] font-bold last:border-r-0"
                 style={{
                   width: `${r.paise}%`,
-                  background: r.highlight ? '#FF8A1F' : i % 2 ? '#E6E8F0' : '#D3D7E6',
-                  color: r.highlight ? '#fff' : '#2A3052',
+                  background: r.highlight ? '#FF4F8B' : i % 2 ? '#FFFFFF' : '#FFF1C7',
+                  color: r.highlight ? '#fff' : '#16130F',
                 }}
               >
                 {r.paise >= 6 ? `${r.paise}p` : ''}
@@ -135,7 +136,7 @@ export default function Essentials() {
           </div>
           <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
             {RUPEE_COMES_FROM.map((r) => (
-              <span key={r.label} className={r.highlight ? 'font-bold text-saffron' : ''}>
+              <span key={r.label} className={r.highlight ? 'font-bold text-pink' : ''}>
                 {r.label} {r.paise}p
               </span>
             ))}
@@ -160,7 +161,7 @@ export default function Essentials() {
             updates as money is actually spent.
           </p>
         </div>
-        <Link to="/build" className="inline-flex shrink-0 items-center gap-2 rounded-full bg-saffron px-5 py-3 text-sm font-semibold text-white">
+        <Link to="/build" className="brut-sm press inline-flex shrink-0 items-center gap-2 rounded-full bg-marigold px-5 py-3 font-display text-sm font-bold">
           Now, build with your 10% <ArrowRight className="h-4 w-4" />
         </Link>
       </Card>

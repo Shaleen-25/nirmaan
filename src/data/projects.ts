@@ -1,4 +1,4 @@
-import type { CityId } from './personas'
+import type { CityId, StateId } from './personas'
 
 export type Tier = 'national' | 'state' | 'local'
 export type Category = 'daily' | 'sports' | 'arts' | 'future' | 'green' | 'health'
@@ -14,7 +14,7 @@ export interface Project {
   tier: Tier
   category: Category
   city?: CityId
-  stateId?: 'KA' | 'MH' | 'DL'
+  stateId?: StateId
   where: string
   agency: string
   vendor: string
@@ -30,12 +30,12 @@ export interface Project {
 }
 
 export const CATEGORIES: Record<Category, { label: string; color: string; soft: string }> = {
-  daily: { label: 'Everyday Life', color: '#2B4ACB', soft: '#E8ECFB' },
-  sports: { label: 'Sports & Play', color: '#E4572E', soft: '#FDECE7' },
-  arts: { label: 'Arts & Culture', color: '#A06CD5', soft: '#F3ECFA' },
-  future: { label: 'Future India', color: '#0E1330', soft: '#E6E8F0' },
-  green: { label: 'Clean & Green', color: '#19A35B', soft: '#E5F6EC' },
-  health: { label: 'Health & Mind', color: '#D6336C', soft: '#FBE8EF' },
+  daily: { label: 'Everyday Life', color: '#3D5AFE', soft: '#E2E7FF' },
+  sports: { label: 'Sports & Play', color: '#FF7A1A', soft: '#FFE6D1' },
+  arts: { label: 'Arts & Culture', color: '#9B6BFF', soft: '#EEE5FF' },
+  future: { label: 'Future India', color: '#00A6A6', soft: '#D5F4F2' },
+  green: { label: 'Clean & Green', color: '#17B26A', soft: '#D8F6E6' },
+  health: { label: 'Health & Mind', color: '#FF4F8B', soft: '#FFE0EB' },
 }
 
 export const TIERS: Record<Tier, { label: string; short: string; blurb: string }> = {
@@ -439,6 +439,32 @@ export const PROJECTS: Project[] = [
     spendRules: ['Court construction', 'Floodlights', 'Coaches'],
   },
 
+  {
+    id: 'tg-maker-labs',
+    title: 'Maker Labs in 33 Districts',
+    tagline: '3D printers, laser cutters and mentors so any kid can prototype an idea',
+    description:
+      'District-level hardware maker labs modelled on Hyderabad’s prototyping centres, open to students, farmers and first-time founders with free machine time.',
+    tier: 'state',
+    category: 'future',
+    stateId: 'TG',
+    where: 'Telangana · all 33 districts',
+    agency: 'Telangana IT, E&C Department',
+    vendor: 'Prototype Commons Pvt Ltd',
+    goalCr: 420,
+    raisedCr: 268,
+    backers: 94_300,
+    months: 18,
+    icon: 'cpu',
+    impact: [
+      { value: '33', label: 'maker labs' },
+      { value: '50,000', label: 'makers / year' },
+      { value: 'Free', label: 'machine time' },
+    ],
+    milestones: ['Sites in districts', 'Machines installed', 'Mentor network', 'All labs open'],
+    spendRules: ['Machines', 'Fit-out', 'Mentor stipends'],
+  },
+
   // ───────────── LOCAL ─────────────
   {
     id: 'blr-garbage',
@@ -715,6 +741,56 @@ export const PROJECTS: Project[] = [
     milestones: ['Cleaning machines', 'Boardwalk', 'Interpretation centre', 'Open to public'],
     spendRules: ['Machinery', 'Boardwalk', 'Exhibits'],
   },
+  {
+    id: 'hyd-durgam',
+    title: 'Durgam Cheruvu Clean Lake',
+    tagline: 'Stop sewage inflow and open a lakeside running loop',
+    description:
+      'Sewage diversion, floating wetlands and a 5 km lit running loop around Durgam Cheruvu, with live water-quality boards at the entrances.',
+    tier: 'local',
+    category: 'green',
+    city: 'hyderabad',
+    where: 'Durgam Cheruvu · Hyderabad',
+    agency: 'Greater Hyderabad Municipal Corporation',
+    vendor: 'Kere Restoration Co.',
+    goalCr: 26,
+    raisedCr: 18.9,
+    backers: 5_640,
+    months: 9,
+    icon: 'waves',
+    impact: [
+      { value: '5 km', label: 'running loop' },
+      { value: '0', label: 'sewage inflow (target)' },
+      { value: 'Live', label: 'water quality boards' },
+    ],
+    milestones: ['Sewage diversion', 'Floating wetlands', 'Running loop', 'Quality boards'],
+    spendRules: ['Drain works', 'Wetlands', 'Track & lights'],
+  },
+  {
+    id: 'hyd-shelters',
+    title: 'Gachibowli Smart Bus Shelters',
+    tagline: 'Shaded shelters with live arrival boards, fans and phone charging',
+    description:
+      'Forty smart bus shelters across the Gachibowli–Kondapur IT corridor with live bus arrivals, ceiling fans, USB charging and night lighting.',
+    tier: 'local',
+    category: 'daily',
+    city: 'hyderabad',
+    where: 'Gachibowli–Kondapur · Hyderabad',
+    agency: 'Greater Hyderabad Municipal Corporation',
+    vendor: 'StopSmart Urban',
+    goalCr: 11,
+    raisedCr: 6.3,
+    backers: 2_980,
+    months: 6,
+    icon: 'bus',
+    impact: [
+      { value: '40', label: 'smart shelters' },
+      { value: 'Live', label: 'arrival boards' },
+      { value: '24×7', label: 'lighting' },
+    ],
+    milestones: ['Site survey', 'Shelter fabrication', 'Boards & charging', 'All shelters live'],
+    spendRules: ['Fabrication', 'Electronics', 'Installation'],
+  },
 ]
 
 /** Projects citizens funded last year (FY 2025-26) — used for the demo track record */
@@ -780,6 +856,27 @@ export const DELIVERED: Record<string, Project> = {
     impact: [{ value: '150', label: 'street sensors' }],
     milestones: ['Sensors', 'Mist cannons', 'Dashboard', 'Audit'],
     spendRules: ['Sensors', 'Cannons'],
+    delivered: true,
+  },
+  hyderabad: {
+    id: 'hyd-potholes',
+    title: 'Madhapur Pothole Patrol',
+    tagline: 'Every reported pothole fixed within 72 hours',
+    description: 'Citizen-funded rapid pothole response with geotagged before/after photos.',
+    tier: 'local',
+    category: 'daily',
+    city: 'hyderabad',
+    where: 'Madhapur · Hyderabad',
+    agency: 'Greater Hyderabad Municipal Corporation',
+    vendor: 'Smooth Roads Contractors',
+    goalCr: 5,
+    raisedCr: 5,
+    backers: 2_210,
+    months: 3,
+    icon: 'truck',
+    impact: [{ value: '1,106', label: 'potholes fixed' }],
+    milestones: ['Survey', 'Repairs phase 1', 'Repairs phase 2', 'Audit'],
+    spendRules: ['Asphalt', 'Labour'],
     delivered: true,
   },
   mumbai: {

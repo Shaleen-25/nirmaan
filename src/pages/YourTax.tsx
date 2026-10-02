@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { ArrowRight, Hammer, MapPin, PieChart, Sparkles } from 'lucide-react'
 import { Card, Counter, Eyebrow, InfoTip, Pill } from '../components/ui'
@@ -9,7 +9,7 @@ import { STANDARD_DEDUCTION, TEN_PERCENT_NOTE } from '../lib/tax'
 
 export default function YourTax() {
   const { persona, tax, income, setIncome } = useStore()
-  if (!persona || !tax) return null
+  if (!persona || !tax) return <Navigate to="/promo/login" replace />
   const city = CITIES[persona.city]
   const value = income ?? persona.income
   const firstName = persona.name.replace('Dr. ', '').split(' ')[0]

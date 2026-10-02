@@ -20,22 +20,22 @@ export default function Fairness() {
   const moneyB = nSmall * cSmall
 
   const models = [
-    { name: 'One person, one vote', note: 'Counts heads only', shares: [nBig / (nBig + nSmall), nSmall / (nBig + nSmall)], color: '#8A93B8' },
-    { name: 'One rupee, one vote', note: 'Counts wallets only', shares: [moneyA / (moneyA + moneyB), moneyB / (moneyA + moneyB)], color: '#E4572E' },
-    { name: 'Nirmaan: square-root voice', note: 'Counts people and contribution', shares: qfShares([Array(nBig).fill(cBig), Array(nSmall).fill(cSmall)]), color: '#FF8A1F', star: true },
+    { name: 'One person, one vote', note: 'Counts heads only', shares: [nBig / (nBig + nSmall), nSmall / (nBig + nSmall)], color: '#9B6BFF' },
+    { name: 'One rupee, one vote', note: 'Counts wallets only', shares: [moneyA / (moneyA + moneyB), moneyB / (moneyA + moneyB)], color: '#FF4F8B' },
+    { name: 'Nirmaan: square-root voice', note: 'Counts people and contribution', shares: qfShares([Array(nBig).fill(cBig), Array(nSmall).fill(cSmall)]), color: '#FFC22E', star: true },
   ]
 
   return (
     <div className="space-y-10">
       <PageHeader
         eyebrow="The fairness model"
-        title={<>₹1 crore in tax vs ₹1 lakh in tax. <span className="text-saffron">Who gets more say?</span></>}
+        title={<>₹1 crore in tax vs ₹1 lakh. <span className="text-pink">Who gets more say?</span></>}
         sub="It's the first question critics ask, and it's a fair one. Here's how Nirmaan answers it, in two layers."
       />
 
       <div className="grid gap-4 md:grid-cols-2">
         <Card className="p-7">
-          <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-ink text-white"><Wallet className="h-5 w-5" /></span>
+          <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-ink bg-pink text-white"><Wallet className="h-5 w-5" /></span>
           <p className="mt-4 text-xs font-bold uppercase tracking-wider text-muted">Layer 1 · Your money</p>
           <h2 className="mt-1 text-2xl font-bold">Your 10% goes exactly where you say.</h2>
           <p className="mt-2 text-muted">
@@ -43,9 +43,9 @@ export default function Fairness() {
             layer is fully proportional.
           </p>
         </Card>
-        <Card className="border-saffron/40 bg-saffron-soft/50 p-7">
-          <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-saffron text-white"><Sigma className="h-5 w-5" /></span>
-          <p className="mt-4 text-xs font-bold uppercase tracking-wider text-[#C25E00]">Layer 2 · Your voice</p>
+        <Card className="rotate-[1deg] p-7" tone="marigold">
+          <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-ink bg-white"><Sigma className="h-5 w-5" /></span>
+          <p className="mt-4 text-xs font-bold uppercase tracking-wider text-ink">Layer 2 · Your voice</p>
           <h2 className="mt-1 text-2xl font-bold">The matching fund listens to people.</h2>
           <p className="mt-2 text-muted">
             A separate government matching fund is shared out by <strong className="text-ink">quadratic funding</strong>. Your voice grows with the{' '}
@@ -60,9 +60,9 @@ export default function Fairness() {
         <Eyebrow>Voice per person in the matching fund</Eyebrow>
         <div className="mt-6 grid items-end gap-8 sm:grid-cols-3">
           {[
-            { who: '₹1 L taxpayer', directs: cSmall, voice: Math.sqrt(cSmall), color: '#19A35B' },
-            { who: '₹10 L taxpayer', directs: 10_00_000 * SHARE, voice: Math.sqrt(10_00_000 * SHARE), color: '#2B4ACB' },
-            { who: '₹1 Cr taxpayer', directs: cBig, voice: Math.sqrt(cBig), color: '#FF8A1F' },
+            { who: '₹1 L taxpayer', directs: cSmall, voice: Math.sqrt(cSmall), color: '#17B26A' },
+            { who: '₹10 L taxpayer', directs: 10_00_000 * SHARE, voice: Math.sqrt(10_00_000 * SHARE), color: '#3D5AFE' },
+            { who: '₹1 Cr taxpayer', directs: cBig, voice: Math.sqrt(cBig), color: '#FF4F8B' },
           ].map((p) => (
             <div key={p.who} className="flex flex-col items-center text-center">
               <motion.div
@@ -70,7 +70,7 @@ export default function Fairness() {
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ type: 'spring', bounce: 0.3 }}
-                className="flex items-center justify-center rounded-full text-sm font-bold text-white"
+                className="flex items-center justify-center rounded-full border-[2.5px] border-ink font-display text-sm font-extrabold text-white shadow-[3px_3px_0_#16130F]"
                 style={{ background: p.color, width: 40 + p.voice / 6, height: 40 + p.voice / 6 }}
               >
                 {Math.round(p.voice / Math.sqrt(cSmall))}×
@@ -96,7 +96,7 @@ export default function Fairness() {
             max={100}
             onChange={setNBig}
             sub={`They direct ${compact(moneyA)} between them`}
-            color="#2B4ACB"
+            color="#3D5AFE"
           />
           <Slider
             label="₹1 L taxpayers backing Neighbourhood Parks"
@@ -106,21 +106,21 @@ export default function Fairness() {
             step={10}
             onChange={setNSmall}
             sub={`They direct ${compact(moneyB)} between them`}
-            color="#19A35B"
+            color="#17B26A"
           />
         </div>
 
         <div className="mt-10 space-y-6">
           {models.map((m) => (
-            <div key={m.name} className={m.star ? 'rounded-2xl bg-saffron-soft/60 p-4 ring-1 ring-saffron/40' : 'px-4'}>
+            <div key={m.name} className={m.star ? 'brut-sm rounded-2xl bg-marigold-soft p-4' : 'px-4'}>
               <div className="mb-2 flex flex-wrap items-baseline justify-between gap-2">
                 <p className="font-bold">{m.name} <span className="ml-1 text-xs font-normal text-muted">{m.note}</span></p>
                 <p className="text-xs text-muted">
                   Stadium <strong className="text-ink">{compact(m.shares[0] * POOL)}</strong> · Parks <strong className="text-ink">{compact(m.shares[1] * POOL)}</strong>
                 </p>
               </div>
-              <div className="flex h-9 overflow-hidden rounded-xl text-xs font-bold text-white">
-                <motion.div animate={{ width: `${m.shares[0] * 100}%` }} transition={{ type: 'spring', bounce: 0, duration: 0.6 }} className="flex items-center overflow-hidden whitespace-nowrap bg-chakra px-3">
+              <div className="flex h-10 overflow-hidden rounded-xl border-2 border-ink text-xs font-bold text-white">
+                <motion.div animate={{ width: `${m.shares[0] * 100}%` }} transition={{ type: 'spring', bounce: 0, duration: 0.6 }} className="flex items-center overflow-hidden whitespace-nowrap border-r-2 border-ink bg-chakra px-3">
                   {m.shares[0] > 0.12 && `Stadium ${pct(m.shares[0])}`}
                 </motion.div>
                 <motion.div animate={{ width: `${m.shares[1] * 100}%` }} transition={{ type: 'spring', bounce: 0, duration: 0.6 }} className="flex items-center justify-end overflow-hidden whitespace-nowrap bg-leaf px-3">
@@ -130,10 +130,10 @@ export default function Fairness() {
             </div>
           ))}
         </div>
-        <p className="mt-6 rounded-2xl bg-ink p-4 text-sm text-white">
+        <p className="brut-sm mt-6 rounded-2xl bg-ink p-4 text-sm text-white">
           Headcount gives the stadium <strong>{pct(models[0].shares[0])}</strong> of the matching fund. Wallets give it{' '}
           <strong>{pct(models[1].shares[0])}</strong>. Nirmaan lands in between at{' '}
-          <strong className="text-saffron">{pct(models[2].shares[0])}</strong>: big taxpayers count for more, but not for everything.
+          <strong className="text-marigold">{pct(models[2].shares[0])}</strong>: big taxpayers count for more, but not for everything.
         </p>
         <p className="mt-3 text-sm text-muted">
           Note: under every model, the stadium backers' own {compact(moneyA)} still goes to the stadium. Only the <em>matching</em> fund is shaped by
@@ -148,14 +148,14 @@ export default function Fairness() {
           { icon: Users, t: 'Open formula', d: 'The matching formula and every allocation are public, in aggregate. Individual choices stay private.' },
         ].map((s) => (
           <Card key={s.t} className="p-6">
-            <s.icon className="h-6 w-6 text-saffron" />
+            <s.icon className="h-6 w-6 text-pink" />
             <h3 className="mt-3 text-lg font-bold">{s.t}</h3>
             <p className="mt-1 text-sm text-muted">{s.d}</p>
           </Card>
         ))}
       </div>
 
-      <Card className="bg-ink p-7 text-center text-white sm:p-10">
+      <Card tone="ink" className="p-7 text-center sm:p-10">
         <h2 className="text-2xl font-bold sm:text-3xl">Is this fair? We genuinely want to know.</h2>
         <p className="mx-auto mt-2 max-w-xl text-white/70">
           Nirmaan is being built in public. Tell us whether the square-root model feels right, or what you'd change.
@@ -169,7 +169,7 @@ function Slider({
   label, value, min, max, step = 1, onChange, sub, color,
 }: { label: string; value: number; min: number; max: number; step?: number; onChange: (n: number) => void; sub: string; color: string }) {
   return (
-    <div className="rounded-2xl bg-paper p-5">
+    <div className="brut-sm rounded-2xl bg-paper p-5">
       <div className="flex items-baseline justify-between gap-3">
         <label className="text-sm font-semibold">{label}</label>
         <span className="font-display text-2xl font-extrabold tabular" style={{ color }}>{value.toLocaleString('en-IN')}</span>

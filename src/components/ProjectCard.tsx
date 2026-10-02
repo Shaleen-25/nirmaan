@@ -22,42 +22,48 @@ export function ProjectCard({ project: p }: { project: Project }) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.97 }}
-      className={clsx(
-        'group flex flex-col overflow-hidden rounded-3xl border bg-card transition',
-        backed ? 'border-saffron ring-2 ring-saffron/30' : 'border-line hover:-translate-y-0.5 hover:shadow-[0_16px_40px_-20px_rgba(14,19,48,.3)]',
-      )}
+      className={clsx('brut press group relative flex flex-col overflow-hidden rounded-[26px] bg-white', backed && '!bg-marigold-soft')}
     >
+      {backed && (
+        <motion.span
+          initial={{ scale: 0, rotate: -30 }}
+          animate={{ scale: 1, rotate: 8 }}
+          className="absolute right-4 top-4 z-10 rounded-full border-2 border-ink bg-marigold px-3 py-1 font-display text-xs font-extrabold shadow-[2px_2px_0_#16130F]"
+        >
+          You're in!
+        </motion.span>
+      )}
       <Link to={`/project/${p.id}`} className="block">
         <ProjectCover project={p} className="h-28" />
       </Link>
       <div className="flex flex-1 flex-col p-5">
         <div className="flex flex-wrap gap-1.5">
-          <Pill className="!bg-ink !text-white">{TIERS[p.tier].label}</Pill>
-          <Pill color={cat.color} soft={cat.soft}>{cat.label}</Pill>
+          <Pill soft="#16130F" color="#FFFFFF">{TIERS[p.tier].label}</Pill>
+          <Pill soft={cat.soft}>{cat.label}</Pill>
         </div>
         <Link to={`/project/${p.id}`}>
-          <h3 className="mt-3 text-lg font-bold leading-snug group-hover:underline">{p.title}</h3>
+          <h3 className="mt-3 text-xl font-extrabold leading-tight group-hover:underline">{p.title}</h3>
         </Link>
-        <p className="mt-1 line-clamp-2 text-sm text-muted">{p.tagline}</p>
+        <p className="mt-1.5 line-clamp-2 text-sm text-ink-soft">{p.tagline}</p>
         <p className="mt-2 flex items-center gap-1 text-xs text-muted">
           <MapPin className="h-3.5 w-3.5 shrink-0" /> <span className="truncate">{p.where}</span>
         </p>
 
         <div className="mt-auto pt-5">
           <div className="flex items-baseline justify-between text-sm">
-            <span className="font-bold tabular">{crore(p.raisedCr)}</span>
-            <span className="text-xs text-muted">of {crore(p.goalCr)} · {pct(funded)}</span>
+            <span className="font-display text-lg font-extrabold tabular">{crore(p.raisedCr)}</span>
+            <span className="font-mono text-[11px] text-muted">of {crore(p.goalCr)} · {pct(funded)}</span>
           </div>
-          <Progress value={funded} color={funded >= 1 ? '#19A35B' : cat.color} className="mt-2" />
-          <div className="mt-3 flex items-center justify-between text-xs text-muted">
+          <Progress value={funded} color={cat.color} className="mt-2" />
+          <div className="mt-3 flex items-center justify-between text-xs font-semibold text-ink-soft">
             <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {count(p.backers)} backers</span>
-            <span className="flex items-center gap-1 font-medium text-leaf"><Sparkles className="h-3.5 w-3.5" /> +{crore(match)} match</span>
+            <span className="flex items-center gap-1 text-leaf"><Sparkles className="h-3.5 w-3.5" /> +{crore(match)} match</span>
           </div>
           <button
             onClick={() => toggle(p.id)}
             className={clsx(
-              'mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full py-2.5 text-sm font-semibold transition active:scale-[0.98]',
-              backed ? 'bg-saffron text-white' : 'bg-ink text-white hover:bg-ink-soft',
+              'brut-sm mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full py-2.5 font-display text-sm font-bold transition active:translate-x-0.5 active:translate-y-0.5 active:shadow-none',
+              backed ? 'bg-white text-ink' : 'bg-ink text-white',
             )}
           >
             {backed ? <><Check className="h-4 w-4" /> Backing this</> : <><Plus className="h-4 w-4" /> Back this project</>}

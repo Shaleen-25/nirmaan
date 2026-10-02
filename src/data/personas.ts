@@ -1,18 +1,22 @@
-export type CityId = 'bengaluru' | 'pune' | 'delhi' | 'mumbai'
+export type CityId = 'bengaluru' | 'pune' | 'delhi' | 'mumbai' | 'hyderabad'
 
 export interface City {
   id: CityId
   name: string
   state: string
-  stateId: 'KA' | 'MH' | 'DL'
+  stateId: StateId
   civicBody: string
+  locality: string
 }
 
+export type StateId = 'KA' | 'MH' | 'DL' | 'TG'
+
 export const CITIES: Record<CityId, City> = {
-  bengaluru: { id: 'bengaluru', name: 'Bengaluru', state: 'Karnataka', stateId: 'KA', civicBody: 'Greater Bengaluru Authority' },
-  pune: { id: 'pune', name: 'Pune', state: 'Maharashtra', stateId: 'MH', civicBody: 'Pune Municipal Corporation' },
-  delhi: { id: 'delhi', name: 'New Delhi', state: 'Delhi', stateId: 'DL', civicBody: 'Municipal Corporation of Delhi' },
-  mumbai: { id: 'mumbai', name: 'Mumbai', state: 'Maharashtra', stateId: 'MH', civicBody: 'Brihanmumbai Municipal Corporation' },
+  bengaluru: { id: 'bengaluru', name: 'Bengaluru', state: 'Karnataka', stateId: 'KA', civicBody: 'Greater Bengaluru Authority', locality: 'Bellandur' },
+  hyderabad: { id: 'hyderabad', name: 'Hyderabad', state: 'Telangana', stateId: 'TG', civicBody: 'Greater Hyderabad Municipal Corporation', locality: 'Gachibowli' },
+  pune: { id: 'pune', name: 'Pune', state: 'Maharashtra', stateId: 'MH', civicBody: 'Pune Municipal Corporation', locality: 'Baner' },
+  mumbai: { id: 'mumbai', name: 'Mumbai', state: 'Maharashtra', stateId: 'MH', civicBody: 'Brihanmumbai Municipal Corporation', locality: 'Andheri West' },
+  delhi: { id: 'delhi', name: 'New Delhi', state: 'Delhi', stateId: 'DL', civicBody: 'Municipal Corporation of Delhi', locality: 'Dwarka' },
 }
 
 export interface Persona {
@@ -45,7 +49,7 @@ export function personaFor(pan: string): Persona {
     pan,
     name: 'Demo Taxpayer',
     role: 'Salaried professional',
-    locality: { bengaluru: 'Koramangala', pune: 'Kothrud', delhi: 'Saket', mumbai: 'Powai' }[city],
+    locality: CITIES[city].locality,
     city,
     income: 24_00_000,
     avatar: 'from-sky-400 to-indigo-600',
