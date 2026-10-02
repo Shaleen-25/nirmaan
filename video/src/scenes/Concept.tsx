@@ -39,11 +39,11 @@ export function Split9010Scene({ scene }: { scene: PlacedScene }) {
         <div className="absolute" style={{ left: BAR_X, top: 110 }}>
           {f < ten.from ? (
             <h2 className="font-display font-extrabold" style={{ fontSize: 96, letterSpacing: '-0.04em', color: INK, ...rise(f, ninety.from - 6) }}>
-              Not every rupee can be opened up.
+              Not every rupee can be transparent.
             </h2>
           ) : (
             <h2 className="font-display font-extrabold" style={{ fontSize: 96, letterSpacing: '-0.04em', color: INK, ...rise(f, ten.from) }}>
-              But the <span style={{ background: C.marigold, padding: '0 16px', borderRadius: 16 }}>debatable slice</span> can.
+              But the <span style={{ background: C.marigold, padding: '0 16px', borderRadius: 16 }}>debatable 10%</span> can.
             </h2>
           )}
         </div>

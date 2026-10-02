@@ -4,9 +4,11 @@
   "type": "module",
   "scripts": {
     "studio": "remotion studio",
+    "align": "node scripts/align-vo.mjs",
     "vo": "node scripts/vo.mjs",
     "sfx": "node scripts/sfx.mjs",
-    "render": "node scripts/render.mjs"
+    "script": "npx tsx scripts/export-script.ts",
+    "render": "remotion render src/index.ts NirmaanDemo out/nirmaan-demo.mp4 --codec=h264 --crf=18"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.532",

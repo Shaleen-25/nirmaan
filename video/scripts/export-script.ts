@@ -3,7 +3,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { FPS, LINES, TIMELINE, TOTAL_FRAMES } from '../src/timeline'
+import { FPS, LINES, TIMELINE, TIMINGS, TOTAL_FRAMES } from '../src/timeline'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const ts = (frames: number, srt = false) => {
@@ -36,18 +36,22 @@ const TITLES: Record<string, string> = {
   end: 'End card',
 }
 
-let md = `# Nirmaan demo video: voiceover script\n\nTotal length **${ts(TOTAL_FRAMES)}** at ${FPS} fps. Times are when each line starts; read at a natural, upbeat pace and the scenes will match. To use your own recording, save one file per line as \`public/vo/<id>.wav\` and run \`node scripts/vo.mjs --measure\` (or just re-render with your full take laid over the silent version).\n\n| # | Time | Scene | Line id | Voiceover |\n|---|---|---|---|---|\n`
+let md = `# Nirmaan demo video: voiceover script\n\nTotal length **${ts(TOTAL_FRAMES)}** at ${FPS} fps. Times are when each line starts; read at a natural, upbeat pace and the scenes will match. To use your own recording, save one take as \`public/vo-full/narration.m4a\` (pause between lines) and run \`node scripts/align-vo.mjs\`, then re-render.\n\n| # | Time | Scene | Line id | Voiceover |\n|---|---|---|---|---|\n`
 let srt = ''
 let n = 1
 TIMELINE.forEach((s, i) => {
   s.lines.forEach((l) => {
     const start = s.from + l.from
     md += `| ${i + 1} | ${ts(start)} | ${TITLES[s.id]} | \`${l.id}\` | ${LINES[l.id].text} |\n`
-    srt += `${n++}\n${ts(start, true)} --> ${ts(start + l.duration, true)}\n${LINES[l.id].text}\n\n`
+    const caps = TIMINGS[l.id]?.caps ?? [[LINES[l.id].text, 0, l.duration / FPS] as [string, number, number]]
+    caps.forEach(([text, t, e], k) => {
+      const end = k + 1 < caps.length ? Math.min(e + 0.25, caps[k + 1][1]) : e + 0.2
+      srt += `${n++}\n${ts(start + t * FPS, true)} --> ${ts(start + end * FPS, true)}\n${text}\n\n`
+    })
   })
 })
 
 writeFileSync(join(root, 'SCRIPT.md'), md)
 mkdirSync(join(root, 'out'), { recursive: true })
 writeFileSync(join(root, 'out/nirmaan-demo.srt'), srt)
-console.log(`Wrote SCRIPT.md and out/nirmaan-demo.srt (${n - 1} lines, ${ts(TOTAL_FRAMES)})`)
+console.log(`Wrote SCRIPT.md and out/nirmaan-demo.srt (${n - 1} captions, ${ts(TOTAL_FRAMES)})`)

@@ -1,52 +1,52 @@
 {
   "hook": {
     "say": "Be honest. Does every chai sutta break at the office, every house party with friends, end with the same question? Where the hell is all my tax money going?",
-    "text": "Be honest. Does every chai-sutta break at the office, every house party with friends, end with the same question… where the hell is all my tax money going?",
+    "text": "Be honest, doesn't every break at the office or a house party somehow end with a question, \"Where the hell is all my tax money going?\"",
     "cap": false
   },
   "three": {
     "say": "Here's the thing. There are three Indias. India One: the ultra-rich. They invest, they create jobs, so the government listens. India Three: the underprivileged. They get schemes and subsidies to lift them out of poverty. And then, there's India Two. Us. The salaried, corporate crowd.",
-    "text": "Here's the thing. There are three Indias. India 1: the ultra-rich. They invest, they create jobs, so the government listens. India 3: the underprivileged. They get schemes and subsidies to lift them out of poverty. And then there's India 2. Us. The salaried, corporate crowd.",
+    "text": "Here's the thing. There are three Indias. India 1, the ultra-rich. They invest, they create jobs, so the government listens. India 3, the underprivileged. They get schemes and subsidies to lift them out of poverty. And then there's India 2. That's us, the salaried corporate crowd.",
     "cap": true
   },
   "pain": {
     "say": "We pay up to thirty percent tax. We still pay for our own water, security and schools. And we get zero say, in how a single rupee is spent.",
-    "text": "We pay up to 30% tax. We still pay for our own water, security and schools. And we get zero say in how a single rupee is spent.",
+    "text": "We pay up to 30% tax. We still pay for our own water, security, and schools, and we get zero say in how a single rupee is spent.",
     "cap": true
   },
   "whatif": {
     "say": "What if, you could choose?",
-    "text": "What if you could choose?",
+    "text": "But what if you could choose",
     "cap": false
   },
   "wishes": {
     "say": "A jogging track in your neighbourhood park. E V chargers, because you're betting big on electric. Garbage trucks that actually show up. Or, India's own chip labs.",
-    "text": "A jogging track in your neighbourhood park. EV chargers, because you're betting big on electric. Garbage trucks that actually show up. Or India's own chip labs.",
+    "text": "a jogging track in your neighbourhood park, an EV charger, because you're betting big on electric, garbage trucks that actually show up, or India's own chip labs?",
     "cap": false
   },
   "meet": {
     "say": "Meet निर्माण. Your tax. Your say.",
-    "text": "Meet Nirmaan. Your tax. Your say.",
+    "text": "Meet Nirmaan, your tax, your say.",
     "cap": false
   },
   "ninety": {
     "say": "Now, not every rupee can be opened up. Defence. Interest. The states' share. That ninety percent, keeps India running.",
-    "text": "Now, not every rupee can be opened up. Defence, interest, the states' share: that 90% keeps India running.",
+    "text": "Now, not every government spend can be transparent. Defence, interest, states' share, the 90% that keeps India running.",
     "cap": true
   },
   "ten": {
     "say": "But the debatable slice, could be decided by the people who pay for it. निर्माण starts with ten percent.",
-    "text": "But the debatable slice could be decided by the people who pay for it. Nirmaan starts with 10%.",
+    "text": "But the debatable 10% is where we come in. Nirmaan starts with 10%.",
     "cap": true
   },
   "start": {
     "say": "Say you pay eight lakh rupees in income tax. निर्माण tears off your ten percent. Eighty thousand rupees, yours to direct.",
-    "text": "Say you pay ₹8 lakh in income tax. Nirmaan tears off your 10%: ₹80,000, yours to direct.",
+    "text": "Say you pay ₹8 lakh in income tax. Nirmaan tears off your 10%. ₹80,000 is yours to direct.",
     "cap": true
   },
   "browse": {
     "say": "Browse projects in the city you live in, the hometown you grew up in, or across India. Back the jogging loop by your lake. Fast chargers for the nation. A library back home. And India's chip labs.",
-    "text": "Browse projects in the city you live in, the hometown you grew up in, or across India. Back the jogging loop by your lake, fast chargers for the nation, a library back home, and India's chip labs.",
+    "text": "Now browse through projects in the city you live in, the hometown you grew up in, or across India. Back the jogging park by a lake, fast chargers for the nation, a library back home, and India's chip lab.",
     "cap": true
   },
   "split": {
@@ -56,47 +56,47 @@
   },
   "mint": {
     "say": "Hit confirm, and your money is minted as purpose-bound e rupee. Digital rupees, that can only be spent on the project you picked.",
-    "text": "Hit confirm, and your money is minted as purpose-bound e-Rupee: digital rupees that can only be spent on the project you picked.",
+    "text": "Hit confirm, and your money is minted as the purpose-bound e-Rupee, digital rupees that can only be spent on the project you picked.",
     "cap": true
   },
   "metro": {
     "say": "Then, the best part. Watch your money ride the Money Metro. Wallet. Escrow. Agency. Vendor. Until your project goes live. Every hop, on a public ledger. Every milestone, with geotagged proof.",
-    "text": "Then, the best part. Watch your money ride the Money Metro: wallet, escrow, agency, vendor… until your project goes live. Every hop on a public ledger. Every milestone with geotagged proof.",
+    "text": "Then the best part, watch your money ride the Money Metro, wallet, escrow, agency, vendor, until your project goes live. Every hop on a public ledger, every milestone with geotagged proof.",
     "cap": true
   },
   "pitch": {
     "say": "Don't see your idea? Pitch it. Turn it into a campaign, share it with your society group and your running club, and rally verified vouches.",
-    "text": "Don't see your idea? Pitch it. Turn it into a campaign, share it with your society group and your running club, and rally verified vouches.",
+    "text": "Don't see your idea? Pitch it. Turn it into a campaign. Share it with your society group and your running club, and rally verified vouches.",
     "cap": true
   },
   "loop": {
     "say": "So when the government plans next year's budget, there's already a ranked list of what India's taxpayers want built. That's the feedback loop.",
-    "text": "So when the government plans next year's budget, there's already a ranked list of what India's taxpayers want built. That's the feedback loop.",
+    "text": "So when the government plans next year's budget, there's already a ranked list of what your taxpayers want. That's a feedback loop.",
     "cap": true
   },
   "govt": {
     "say": "For the government, it means transparent governance, and the trust of the generation that pays for it.",
-    "text": "For the government, it means transparent governance, and the trust of the generation that pays for it.",
+    "text": "For the government, it means transparent governance and the trust of the generation that is paying for the growth.",
     "cap": true
   },
   "you": {
     "say": "For you, it's the pride of knowing you're not just paying for India. You're building it.",
-    "text": "For you, it's the pride of knowing you're not just paying for India. You're building it.",
+    "text": "For you, it's the pride of knowing you're not just paying for India, you're actually helping build it.",
     "cap": false
   },
   "edge": {
     "say": "I know. It's a far-fetched idea, and you're probably already thinking of ten edge cases. Good. Shoot them my way.",
-    "text": "I know, it's a far-fetched idea, and you're probably already thinking of ten edge cases. Good. Shoot them my way.",
+    "text": "I know, it's a far-fetched idea, and you already have a hundred scenarios popping up in your mind on why it won't work. Good. Shoot them my way.",
     "cap": false
   },
   "public": {
     "say": "I'm building this in public, and your feedback shapes what comes next. Try it. Break it. Tell me what you think.",
-    "text": "I'm building this in public, and your feedback shapes what comes next. Try it. Break it. Tell me what you think.",
+    "text": "I'm building this in public, and your feedback shapes what comes next. Try it, break it, tell me what you think.",
     "cap": false
   },
   "end": {
     "say": "निर्माण. Your tax. Your say.",
-    "text": "Nirmaan. Your tax. Your say.",
+    "text": "Nirmaan, your tax, your say.",
     "cap": false
   }
 }

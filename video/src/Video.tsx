@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react'
 import { AbsoluteFill, Audio, Sequence, interpolate, staticFile, useCurrentFrame } from 'remotion'
 import { C, INK, Sfx, SfxOn, Wordmark } from './kit'
-import { LINES, TIMELINE, TOTAL_FRAMES, type PlacedScene, type SceneId } from './timeline'
+import { FPS, LINES, TIMELINE, TIMINGS, TOTAL_FRAMES, type PlacedScene, type SceneId } from './timeline'
 import { HookScene, PainScene, ThreeIndiasScene, TitleScene, WhatIfScene } from './scenes/Intro'
 import { Split9010Scene } from './scenes/Concept'
 import { AllocateScene, BrowseScene, MintScene, StartScene } from './scenes/Demo'
@@ -121,28 +121,17 @@ function Watermark() {
   )
 }
 
-/** Burned-in captions for muted autoplay, chunked into short phrases */
+/** Burned-in captions for muted autoplay: short phrases timed to the spoken words */
 function Captions() {
   const f = useCurrentFrame()
   for (const s of TIMELINE) {
     for (const l of s.lines) {
-      const meta = LINES[l.id]
-      if (!meta.cap) continue
+      if (!LINES[l.id].cap) continue
       const start = s.from + l.from
-      const end = start + l.duration
-      if (f < start || f >= end + 4) continue
-      const chunks = chunk(meta.text)
-      const total = chunks.reduce((a, c) => a + c.length, 0)
-      let acc = 0
-      let current = chunks[chunks.length - 1]
-      for (const c of chunks) {
-        const cEnd = start + ((acc + c.length) / total) * l.duration
-        if (f < cEnd) {
-          current = c
-          break
-        }
-        acc += c.length
-      }
+      if (f < start - 2 || f >= start + l.duration + 4) continue
+      const phrases = TIMINGS[l.id]?.caps ?? chunk(LINES[l.id].text).map((c, i, all) => [c, (i / all.length) * (l.duration / FPS), 0] as const)
+      let current = phrases[0][0]
+      for (const [text, t] of phrases) if (f >= start + Math.round(t * FPS) - 2) current = text
       return (
         <div style={{ position: 'absolute', left: 0, right: 0, bottom: 44, display: 'flex', justifyContent: 'center', zIndex: 60 }}>
           <span
@@ -169,7 +158,7 @@ function Captions() {
   return null
 }
 
-/** Split a line into caption phrases of at most ~9 words, preferring punctuation */
+/** Fallback when a line has no recorded timings: phrases of at most ~9 words, preferring punctuation */
 function chunk(text: string): string[] {
   const parts = text.split(/(?<=[.,:?!…])\s+/)
   const out: string[] = []

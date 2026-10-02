@@ -11,12 +11,12 @@ export function WinWinScene({ scene }: { scene: PlacedScene }) {
   const you = lineOf(scene, 'you')
   const left = sp(f, 0, { damping: 16, stiffness: 120 })
   const right = sp(f, you.from - 10, { damping: 16, stiffness: 120 })
-  const buildAt = wordAt(scene, 'you', 'building')
+  const buildAt = wordAt(scene, 'you', 'build')
 
   const govtPoints = [
     { t: 'Transparent governance', at: wordAt(scene, 'govt', 'transparent') },
     { t: 'Trust of taxpayers', at: wordAt(scene, 'govt', 'trust') },
-    { t: 'A ranked wishlist for every Budget', at: wordAt(scene, 'govt', 'pays') + 6 },
+    { t: 'A ranked wishlist for every Budget', at: wordAt(scene, 'govt', 'paying') + 6 },
   ]
   const youPoints = [
     { t: 'A real say in where your tax goes', at: you.from + 2 },
@@ -84,7 +84,7 @@ const NOTES = [
 export function EdgeScene({ scene }: { scene: PlacedScene }) {
   const f = useCurrentFrame()
   const line = lineOf(scene, 'edge')
-  const thinking = wordAt(scene, 'edge', 'probably')
+  const thinking = wordAt(scene, 'edge', 'hundred')
   const good = wordAt(scene, 'edge', 'good')
   const shoot = wordAt(scene, 'edge', 'shoot')
   const reveal = ramp(f, [line.from, line.from + 34])

@@ -6,7 +6,9 @@ Listen to `out/nirmaan-demo-guide.mp4` on earphones for pace, then record the li
 - **Pause 2–3 seconds between lines** (count "one-thousand-two"). That's how the lines get split; pauses *inside* a line should stay short.
 - Don't worry about matching the guide's timing exactly. The video re-times every scene to your pace.
 - Fluffed a line? Pause, and re-read the **whole line**. Then tell me which line had a retake.
-- Save it as `video/public/vo-full/narration.mp3` (or .m4a) and tell me.
+- Save it as `video/public/vo-full/narration.m4a` (or .mp3/.wav), then from `video/` run `npm run align`, `npm run script` and `npm run render`.
+
+`npm run align` transcribes the take (ElevenLabs Scribe, cached as `narration.transcript.json`), matches it to the script even where you ad-lib, cuts one clip per line on word boundaries, drops false starts that trail off ("I know it's…"), and levels the voice. Every visual cue and caption is then timed to your actual words. The line text in `src/vo-lines.json` is updated to what you said, so the table below is the original script.
 
 | # | Line |
 |---|---|

@@ -78,7 +78,7 @@ export function HookScene({ scene }: { scene: PlacedScene }) {
           <div style={pop(f, 4, -5)}>
             <Sticker tone="marigold" size={44}>Be honest 👀</Sticker>
           </div>
-          <p className="font-display font-bold" style={{ fontSize: 66, lineHeight: 1.05, marginTop: 48, color: INK, ...rise(f, wordAt(scene, 'hook', 'chai')) }}>
+          <p className="font-display font-bold" style={{ fontSize: 66, lineHeight: 1.05, marginTop: 48, color: INK, ...rise(f, wordAt(scene, 'hook', 'break')) }}>
             Every chai-sutta break. Every house party. It ends with…
           </p>
           <div style={{ marginTop: 34, ...pop(f, where, -2, 0.7) }}>
@@ -187,7 +187,7 @@ export function PainScene({ scene }: { scene: PlacedScene }) {
 
 const WISHES = [
   { e: '🏃', t: 'A jogging track', s: 'in your neighbourhood park', bg: C.saffron, word: 'jogging', r: -4 },
-  { e: '⚡', t: 'EV chargers', s: "you're betting big on electric", bg: C.mint, word: 'chargers', r: 3 },
+  { e: '⚡', t: 'EV chargers', s: "you're betting big on electric", bg: C.mint, word: 'ev', r: 3 },
   { e: '🚛', t: 'Garbage trucks', s: 'that actually show up', bg: C.blue, word: 'garbage', r: -2 },
   { e: '🔬', t: "India's own chip labs", s: 'made-in-India silicon', bg: C.teal, word: 'chip', r: 4 },
 ]
@@ -245,7 +245,7 @@ export function WhatIfScene({ scene }: { scene: PlacedScene }) {
           })}
         </div>
 
-        <div className="absolute flex w-full justify-center" style={{ top: 935, ...pop(f, last + 34, -3) }}>
+        <div className="absolute flex w-full justify-center" style={{ top: 935, ...pop(f, last + 16, -3) }}>
           <Sticker tone="ink" size={42}>You decide where it goes ✓</Sticker>
         </div>
       </AbsoluteFill>
@@ -347,7 +347,7 @@ export function ThreeIndiasScene({ scene }: { scene: PlacedScene }) {
   const f = useCurrentFrame()
   const line = lineOf(scene, 'three')
   const twoAt = wordAt(scene, 'three', 'india two')
-  const usAt = wordAt(scene, 'three', 'us.')
+  const usAt = wordAt(scene, 'three', 'us')
   const focus = sp(f, twoAt, { damping: 14, stiffness: 120 })
 
   return (
