@@ -9,7 +9,7 @@ export const OWNER = {
 
 /**
  * Web3Forms access key (public by design) that delivers the feedback box to OWNER.email.
- * Get one free at https://web3forms.com, then set VITE_WEB3FORMS_KEY in Vercel → Settings → Environment Variables.
- * Without it, feedback falls back to a prefilled email.
+ * Web3Forms keys are meant to ship in client code; VITE_WEB3FORMS_KEY can override it per environment.
+ * If submission fails, feedback falls back to a prefilled email.
  */
-export const WEB3FORMS_KEY: string = import.meta.env.VITE_WEB3FORMS_KEY ?? ''
+export const WEB3FORMS_KEY: string = import.meta.env.VITE_WEB3FORMS_KEY ?? '7dede04f-4ae7-4264-88fa-49ee8c1d9feb'

@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@source not "../video";
 
 @theme {
   --color-ink: #16130F;
