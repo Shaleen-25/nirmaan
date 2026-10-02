@@ -2,22 +2,22 @@ import { motion } from 'motion/react'
 import { CheckCheck } from 'lucide-react'
 
 export const CHAT = [
-  { who: 'Papa', text: 'TDS cut ₹67,000 again this month 😤', me: false, color: '#3D5AFE' },
-  { who: 'You', text: 'And the road outside my office still looks like the moon 🌚', me: true, color: '' },
-  { who: 'Mummy', text: 'Where does all our tax money even go??', me: false, color: '#FF4F8B' },
-  { who: 'Chachu', text: 'Nobody asks us. We just pay. 🙏', me: false, color: '#17B26A' },
+  { who: 'Rahul', text: 'Salary credited. TDS took ₹67,000 again 😤', me: false, color: '#3D5AFE' },
+  { who: 'You', text: 'And the road outside office still looks like the moon 🌚', me: true, color: '' },
+  { who: 'Priya', text: 'Where the hell is all our tax money going??', me: false, color: '#FF4F8B' },
+  { who: 'Kabir', text: 'Nobody asks us. We just pay. 🙏', me: false, color: '#17B26A' },
   { who: 'You', text: 'What if we could decide? 🤔', me: true, color: '' },
 ]
 
-/** The family WhatsApp group every Indian taxpayer is in */
+/** The office chai-sutta group every Indian taxpayer is in */
 export function FamilyChat() {
   return (
     <div className="brut-lg mx-auto w-full max-w-sm overflow-hidden rounded-[28px] bg-[#EFE7DC]">
       <div className="flex items-center gap-3 border-b-2 border-ink bg-leaf px-4 py-3 text-white">
-        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-ink bg-marigold text-lg">🏠</span>
+        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border-2 border-ink bg-marigold text-lg">☕</span>
         <div className="leading-tight">
-          <p className="font-display font-extrabold">Ghar ke Log</p>
-          <p className="text-[11px] text-white/80">Papa, Mummy, Chachu, You</p>
+          <p className="font-display font-extrabold">Chai Sutta Gang</p>
+          <p className="text-[11px] text-white/80">Rahul, Priya, Kabir, You</p>
         </div>
       </div>
       <div className="bg-dots space-y-2.5 p-4">

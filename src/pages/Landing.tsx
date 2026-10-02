@@ -131,9 +131,9 @@ export default function Landing() {
         </motion.div>
         <motion.div {...fade} transition={{ ...fade.transition, delay: 0.1 }}>
           <Eyebrow dot="#17B26A">Sound familiar?</Eyebrow>
-          <h2 className="mt-3 text-5xl font-extrabold leading-[0.95] sm:text-6xl">Every family dinner ends with the same question.</h2>
+          <h2 className="mt-3 text-5xl font-extrabold leading-[0.95] sm:text-6xl">Every chai-sutta break ends with the same question.</h2>
           <p className="mt-4 text-lg text-ink-soft">
-            You pay up to 30% income tax. You still pay for your own water, security and schools. And you get zero say in how a single rupee of it is
+            Office chai breaks, house parties with friends: sooner or later someone asks, “where the hell is all my tax money going?” You pay up to 30% income tax. You still pay for your own water, security and schools. And you get zero say in how a single rupee of it is
             spent.
           </p>
           <p className="mt-7 font-display text-2xl font-extrabold">What if you could choose?</p>

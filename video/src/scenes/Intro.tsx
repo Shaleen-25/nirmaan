@@ -5,10 +5,10 @@ import { lineOf, wordAt, type PlacedScene } from '../timeline'
 /* ───────────────────────── 1 · Hook: the family WhatsApp group ───────────────────────── */
 
 const CHAT = [
-  { who: 'Papa', text: 'TDS cut ₹67,000 again this month 😤', me: false, color: C.blue },
-  { who: 'You', text: 'And the road outside my office still looks like the moon 🌚', me: true, color: '' },
-  { who: 'Mummy', text: 'Where does all our tax money even go??', me: false, color: C.pink },
-  { who: 'Chachu', text: 'Nobody asks us. We just pay 🙏', me: false, color: C.mint },
+  { who: 'Rahul', text: 'Salary credited. TDS took ₹67,000 again 😤', me: false, color: C.blue },
+  { who: 'You', text: 'And the road outside office still looks like the moon 🌚', me: true, color: '' },
+  { who: 'Priya', text: 'Where the hell is all our tax money going??', me: false, color: C.pink },
+  { who: 'Kabir', text: 'Nobody asks us. We just pay 🙏', me: false, color: C.mint },
   { who: 'You', text: 'What if we could decide? 🤔', me: true, color: '' },
 ]
 
@@ -29,11 +29,11 @@ export function HookScene({ scene }: { scene: PlacedScene }) {
           <div className="flex h-full flex-col overflow-hidden" style={{ borderRadius: 50, background: '#EFE7DC' }}>
             <div className="flex items-center gap-4" style={{ background: C.mint, borderBottom: `5px solid ${INK}`, padding: '34px 30px 22px' }}>
               <span className="flex items-center justify-center rounded-full" style={{ width: 70, height: 70, background: C.marigold, border: `4px solid ${INK}`, fontSize: 38 }}>
-                🏠
+                ☕
               </span>
               <div style={{ color: '#fff' }}>
-                <p className="font-display font-extrabold" style={{ fontSize: 36 }}>Ghar ke Log</p>
-                <p style={{ fontSize: 20, opacity: 0.85 }}>Papa, Mummy, Chachu, You</p>
+                <p className="font-display font-extrabold" style={{ fontSize: 36 }}>Chai Sutta Gang</p>
+                <p style={{ fontSize: 20, opacity: 0.85 }}>Rahul, Priya, Kabir, You</p>
               </div>
             </div>
             <div className="bg-dots flex flex-1 flex-col justify-end gap-4" style={{ padding: 26 }}>
@@ -78,17 +78,17 @@ export function HookScene({ scene }: { scene: PlacedScene }) {
           <div style={pop(f, 4, -5)}>
             <Sticker tone="marigold" size={44}>Be honest 👀</Sticker>
           </div>
-          <p className="font-display font-bold" style={{ fontSize: 66, lineHeight: 1.05, marginTop: 48, color: INK, ...rise(f, wordAt(scene, 'hook', 'does')) }}>
-            Does every family dinner end with…
+          <p className="font-display font-bold" style={{ fontSize: 66, lineHeight: 1.05, marginTop: 48, color: INK, ...rise(f, wordAt(scene, 'hook', 'chai')) }}>
+            Every chai-sutta break. Every house party. It ends with…
           </p>
           <div style={{ marginTop: 34, ...pop(f, where, -2, 0.7) }}>
             <p className="font-display font-extrabold" style={{ fontSize: 112, lineHeight: 1.1, letterSpacing: '-0.035em', color: INK }}>
-              “Where is all our{' '}
+              “Where the hell is all my{' '}
               <span style={{ background: C.marigold, padding: '0 14px', borderRadius: 14, boxDecorationBreak: 'clone', WebkitBoxDecorationBreak: 'clone' }}>tax money</span> going?”
             </p>
           </div>
           <div style={{ marginTop: 46, ...pop(f, scene.duration - 40, 4) }}>
-            <Sticker tone="pink" size={40}>Every. Single. Dinner.</Sticker>
+            <Sticker tone="pink" size={40}>Every. Single. Time.</Sticker>
           </div>
         </div>
       </AbsoluteFill>

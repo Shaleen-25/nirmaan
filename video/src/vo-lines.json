@@ -1,7 +1,7 @@
 {
   "hook": {
-    "say": "Be honest. Does every family dinner end with the same question? Where is all our tax money going?",
-    "text": "Be honest. Does every family dinner end with the same question… where is all our tax money going?",
+    "say": "Be honest. Does every chai sutta break at the office, every house party with friends, end with the same question? Where the hell is all my tax money going?",
+    "text": "Be honest. Does every chai-sutta break at the office, every house party with friends, end with the same question… where the hell is all my tax money going?",
     "cap": false
   },
   "pain": {
@@ -20,7 +20,7 @@
     "cap": false
   },
   "meet": {
-    "say": "Meet Nirmaan. Your tax. Your say.",
+    "say": "Meet निर्माण. Your tax. Your say.",
     "text": "Meet Nirmaan. Your tax. Your say.",
     "cap": false
   },
@@ -30,12 +30,12 @@
     "cap": true
   },
   "ten": {
-    "say": "But the debatable slice, could be decided by the people who pay for it. Nirmaan starts with ten percent.",
+    "say": "But the debatable slice, could be decided by the people who pay for it. निर्माण starts with ten percent.",
     "text": "But the debatable slice could be decided by the people who pay for it. Nirmaan starts with 10%.",
     "cap": true
   },
   "start": {
-    "say": "Say you pay eight lakh rupees in income tax. Nirmaan tears off your ten percent. Eighty thousand rupees, yours to direct.",
+    "say": "Say you pay eight lakh rupees in income tax. निर्माण tears off your ten percent. Eighty thousand rupees, yours to direct.",
     "text": "Say you pay ₹8 lakh in income tax. Nirmaan tears off your 10%: ₹80,000, yours to direct.",
     "cap": true
   },
@@ -90,7 +90,7 @@
     "cap": false
   },
   "end": {
-    "say": "Nirmaan. Your tax. Your say.",
+    "say": "निर्माण. Your tax. Your say.",
     "text": "Nirmaan. Your tax. Your say.",
     "cap": false
   }

@@ -2,3 +2,4 @@ node_modules
 out
 public/vo
 .env
+public/vo-full
