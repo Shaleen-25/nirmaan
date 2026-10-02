@@ -4,7 +4,7 @@ export type Tier = 'national' | 'state' | 'local'
 export type Category = 'daily' | 'sports' | 'arts' | 'future' | 'green' | 'health'
 export type IconKey =
   | 'cpu' | 'brain' | 'trophy' | 'stethoscope' | 'heart' | 'film' | 'wind' | 'telescope' | 'library' | 'droplets'
-  | 'train' | 'trees' | 'mountain' | 'bus' | 'recycle' | 'footprints' | 'bike' | 'lamp' | 'dumbbell' | 'book' | 'waves' | 'truck'
+  | 'train' | 'trees' | 'mountain' | 'bus' | 'recycle' | 'footprints' | 'bike' | 'lamp' | 'dumbbell' | 'book' | 'waves' | 'truck' | 'zap'
 
 export interface Project {
   id: string
@@ -189,6 +189,30 @@ export const PROJECTS: Project[] = [
     ],
     milestones: ['Jury constitution', 'Round 1 grants', 'AVGC labs rollout', 'Showcase festival'],
     spendRules: ['Creator grants', 'Lab equipment', 'Festival production'],
+  },
+  {
+    id: 'charge-bharat',
+    title: 'Charge Bharat: 1 Lakh EV Fast-Chargers',
+    tagline: 'Fast chargers in housing societies, tech parks and every 25 km of highway',
+    description:
+      'Public fast-charging hubs where Indians actually park: apartment societies, office parks, malls and highways. One app and one tap-to-pay e₹ wallet across every charger, so going electric stops being a gamble.',
+    tier: 'national',
+    category: 'green',
+    where: 'Pan-India · societies, tech parks, highways',
+    agency: 'Ministry of Power · BEE',
+    vendor: 'VoltGrid Charging Ltd',
+    goalCr: 3800,
+    raisedCr: 2120,
+    backers: 362_400,
+    months: 24,
+    icon: 'zap',
+    impact: [
+      { value: '1 L', label: 'fast chargers' },
+      { value: '25 km', label: 'highway spacing' },
+      { value: '15 min', label: 'to 80% charge' },
+    ],
+    milestones: ['Site partnerships', 'First 10,000 chargers', 'Highway corridors', 'All 1 lakh live'],
+    spendRules: ['Charger hardware', 'Grid upgrades', 'Installation'],
   },
   {
     id: 'saaf-hawa',

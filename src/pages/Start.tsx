@@ -20,7 +20,7 @@ function niceRound(n: number) {
   return Math.round(n / step) * step
 }
 
-const PRESETS = [50_000, 1_50_000, 5_00_000, 25_00_000]
+const PRESETS = [50_000, 1_50_000, 5_00_000, 8_00_000, 25_00_000]
 
 export default function Start() {
   const store = useStore()

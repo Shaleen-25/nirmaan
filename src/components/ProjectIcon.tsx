@@ -1,6 +1,6 @@
 import {
   Bike, BookOpen, Brain, Bus, Cpu, Droplets, Dumbbell, Film, Footprints, Heart, Lamp, Library, Mountain, Recycle,
-  Stethoscope, Telescope, TrainFront, Trees, Trophy, Truck, WavesHorizontal, Wind, type LucideIcon,
+  Stethoscope, Telescope, TrainFront, Trees, Trophy, Truck, WavesHorizontal, Wind, Zap, type LucideIcon,
 } from 'lucide-react'
 import type { IconKey, Project } from '../data/projects'
 import { CATEGORIES } from '../data/projects'
@@ -9,7 +9,7 @@ const ICONS: Record<IconKey, LucideIcon> = {
   cpu: Cpu, brain: Brain, trophy: Trophy, stethoscope: Stethoscope, heart: Heart, film: Film, wind: Wind,
   telescope: Telescope, library: Library, droplets: Droplets, train: TrainFront, trees: Trees, mountain: Mountain,
   bus: Bus, recycle: Recycle, footprints: Footprints, bike: Bike, lamp: Lamp, dumbbell: Dumbbell, book: BookOpen,
-  waves: WavesHorizontal, truck: Truck,
+  waves: WavesHorizontal, truck: Truck, zap: Zap,
 }
 
 export function ProjectIcon({ project, size = 'md' }: { project: Project; size?: 'sm' | 'md' | 'lg' }) {

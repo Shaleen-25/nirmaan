@@ -1,8 +1,9 @@
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import clsx from 'clsx'
-import { ArrowRight, Hammer, Landmark, Lightbulb, Scale, TrainFront } from 'lucide-react'
-import { Logo } from './ui'
+import { ArrowRight, Hammer, Landmark, Lightbulb, Mail, MessageCircleHeart, Scale, TrainFront } from 'lucide-react'
+import { LinkedInIcon, Logo } from './ui'
+import { OWNER } from '../config'
 import { useStore } from '../store'
 import { compact, rupees } from '../lib/format'
 
@@ -46,19 +47,24 @@ export default function Layout() {
             ))}
           </nav>
 
-          {ready ? (
-            <Link to="/start" className="brut-sm press inline-flex items-center gap-2 rounded-full bg-marigold py-1.5 pl-2 pr-4" title="Change your tax or city">
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border-2 border-ink bg-white font-display text-xs font-extrabold">e₹</span>
-              <span className="leading-tight">
-                <span className="block font-display text-sm font-extrabold tabular">{rupees(budget)}</span>
-                <span className="block text-[10px] font-semibold text-ink-soft">your 10% · edit</span>
-              </span>
+          <div className="flex items-center gap-4">
+            <Link to="/feedback" className="hidden items-center gap-1.5 font-display text-sm font-bold text-pink hover:underline xl:inline-flex">
+              <MessageCircleHeart className="h-4 w-4" /> Feedback
             </Link>
-          ) : (
-            <Link to="/start" className="brut-sm press inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 font-display text-sm font-bold text-white">
-              Start building <ArrowRight className="h-4 w-4" />
-            </Link>
-          )}
+            {ready ? (
+              <Link to="/start" className="brut-sm press inline-flex items-center gap-2 rounded-full bg-marigold py-1.5 pl-2 pr-4" title="Change your tax or city">
+                <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border-2 border-ink bg-white font-display text-xs font-extrabold">e₹</span>
+                <span className="leading-tight">
+                  <span className="block font-display text-sm font-extrabold tabular">{rupees(budget)}</span>
+                  <span className="block text-[10px] font-semibold text-ink-soft">your 10% · edit</span>
+                </span>
+              </Link>
+            ) : (
+              <Link to="/start" className="brut-sm press inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 font-display text-sm font-bold text-white">
+                Start building <ArrowRight className="h-4 w-4" />
+              </Link>
+            )}
+          </div>
         </div>
       </header>
 
@@ -85,7 +91,17 @@ export default function Layout() {
               <Link to="/fairness" className="hover:text-marigold">Fairness</Link>
               <Link to="/government" className="hover:text-marigold">For Government</Link>
               <Link to="/essentials" className="hover:text-marigold">Where the 90% goes</Link>
+              <Link to="/feedback" className="hover:text-marigold">Feedback</Link>
             </div>
+          </div>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <span className="font-hand text-lg text-white/70">Built in public by {OWNER.name}</span>
+            <a href={OWNER.linkedin} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-full border-2 border-white/30 px-3 py-1.5 text-xs font-bold hover:border-white">
+              <LinkedInIcon className="h-3.5 w-3.5" /> LinkedIn
+            </a>
+            <a href={`mailto:${OWNER.email}`} className="inline-flex items-center gap-1.5 rounded-full border-2 border-white/30 px-3 py-1.5 text-xs font-bold hover:border-white">
+              <Mail className="h-3.5 w-3.5" /> {OWNER.email}
+            </a>
           </div>
           <p className="mt-8 max-w-3xl border-t border-white/15 pt-5 text-xs text-white/55">
             Nirmaan is a concept prototype, built in public. Not affiliated with the Government of India, RBI or the Income Tax Department.

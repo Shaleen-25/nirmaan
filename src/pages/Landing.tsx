@@ -9,6 +9,8 @@ import { ProjectIcon } from '../components/ProjectIcon'
 import { TaxReceipt } from '../components/Receipt'
 import { MoneyMetro, buildStations, useMetroPlayer } from '../components/MoneyMetro'
 import { IdeaLoop } from '../components/IdeaLoop'
+import { FamilyChat } from '../components/FamilyChat'
+import { BuildInPublic } from '../components/Feedback'
 import { PROJECTS, TIERS, type Tier } from '../data/projects'
 import { INCOME_TAX_BE_CR, BUDGET_YEAR } from '../data/budget'
 import { crore } from '../lib/format'
@@ -26,6 +28,13 @@ const STEPS = [
   { icon: Vote, t: 'Back what matters', d: 'Chip studios for India, a jogging loop for your ward, or both.', bg: 'bg-pink text-white', rot: 1.5 },
   { icon: Eye, t: 'Ride the Money Metro', d: 'Watch your e₹ travel, stop by stop, until the project goes live.', bg: 'bg-chakra text-white', rot: -1 },
   { icon: Lightbulb, t: 'Pitch the next one', d: 'Missing something? Post an idea, rally vouches, reach the next Budget.', bg: 'bg-leaf text-white', rot: 2 },
+]
+
+const WISHES = [
+  { id: 'blr-lake-park', t: 'A jogging track in your neighbourhood park', bg: 'bg-saffron-soft' },
+  { id: 'charge-bharat', t: "EV chargers, because you're betting big on electric", bg: 'bg-leaf-soft' },
+  { id: 'blr-garbage', t: 'Garbage trucks that actually show up', bg: 'bg-chakra-soft' },
+  { id: 'chip-studio', t: "India's own chip labs", bg: 'bg-teal-soft' },
 ]
 
 const TIER_TONES: Record<Tier, string> = { local: 'bg-pink-soft', state: 'bg-chakra-soft', national: 'bg-marigold-soft' }
@@ -114,6 +123,33 @@ export default function Landing() {
           ]}
         />
       </div>
+
+      {/* HOOK */}
+      <section className="grid items-center gap-12 lg:grid-cols-[1fr_1.15fr]">
+        <motion.div {...fade}>
+          <FamilyChat />
+        </motion.div>
+        <motion.div {...fade} transition={{ ...fade.transition, delay: 0.1 }}>
+          <Eyebrow dot="#17B26A">Sound familiar?</Eyebrow>
+          <h2 className="mt-3 text-5xl font-extrabold leading-[0.95] sm:text-6xl">Every family dinner ends with the same question.</h2>
+          <p className="mt-4 text-lg text-ink-soft">
+            You pay up to 30% income tax. You still pay for your own water, security and schools. And you get zero say in how a single rupee of it is
+            spent.
+          </p>
+          <p className="mt-7 font-display text-2xl font-extrabold">What if you could choose?</p>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {WISHES.map((w, i) => {
+              const p = PROJECTS.find((x) => x.id === w.id)!
+              return (
+                <Link key={w.id} to={`/project/${w.id}`} className={`brut-sm press flex items-center gap-3 rounded-2xl p-3 ${w.bg}`} style={{ rotate: `${i % 2 ? 1 : -1}deg` }}>
+                  <ProjectIcon project={p} size="sm" />
+                  <span className="text-sm font-bold leading-snug">{w.t}</span>
+                </Link>
+              )
+            })}
+          </div>
+        </motion.div>
+      </section>
 
       {/* STATS */}
       <motion.section {...fade} className="grid gap-5 sm:grid-cols-3">
@@ -335,6 +371,11 @@ export default function Landing() {
         <Link to="/start" className="brut press mt-9 inline-flex items-center gap-2 rounded-full bg-marigold px-8 py-4 font-display text-lg font-extrabold">
           Start building <ArrowRight className="h-5 w-5" />
         </Link>
+      </motion.section>
+
+      {/* BUILDING IN PUBLIC */}
+      <motion.section {...fade} id="feedback" className="scroll-mt-24">
+        <BuildInPublic />
       </motion.section>
     </div>
   )

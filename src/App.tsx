@@ -13,6 +13,7 @@ import Ideas from './pages/Ideas'
 import IdeaStory from './pages/IdeaStory'
 import Fairness from './pages/Fairness'
 import Government from './pages/Government'
+import FeedbackPage from './pages/FeedbackPage'
 import Login from './pages/Login'
 import YourTax from './pages/YourTax'
 import { useStore } from './store'
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="fairness" element={<Fairness />} />
         <Route path="government" element={<Government />} />
         <Route path="track" element={<Track />} />
+        <Route path="feedback" element={<FeedbackPage />} />
         <Route path="essentials" element={<NeedsSetup><Essentials /></NeedsSetup>} />
         <Route path="build" element={<NeedsSetup><Build /></NeedsSetup>} />
         <Route path="project/:id" element={<ProjectDetail />} />
