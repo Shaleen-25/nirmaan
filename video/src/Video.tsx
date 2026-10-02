@@ -14,6 +14,9 @@ export type VideoProps = {
   captions: boolean
   music: boolean
   sfx: boolean
+  /** Track in public/ and its integrated loudness, so any track sits at the same level under the voice */
+  musicFile?: string
+  musicLufs?: number
 }
 
 const SCENES: Record<SceneId, ComponentType<{ scene: PlacedScene }>> = {
@@ -41,7 +44,7 @@ const WIPE = 14
 /** Scenes that start with a hard cut instead of a colour wipe */
 const HARD_CUT: SceneId[] = ['title', 'allocate', 'loop', 'end']
 
-export function NirmaanVideo({ voiceover, captions, music, sfx }: VideoProps) {
+export function NirmaanVideo({ voiceover, captions, music, sfx, musicFile = 'music.mp3', musicLufs = MUSIC_REF_LUFS }: VideoProps) {
   return (
     <SfxOn.Provider value={sfx}>
     <AbsoluteFill style={{ background: C.paper }}>
@@ -63,7 +66,7 @@ export function NirmaanVideo({ voiceover, captions, music, sfx }: VideoProps) {
           )),
         )}
 
-      {music && <Music />}
+      {music && <Music file={musicFile} lufs={musicLufs} />}
 
       <Watermark />
       {captions && <Captions />}
@@ -174,11 +177,31 @@ function chunk(text: string): string[] {
   }, [])
 }
 
-/** Optional background bed: drop a track at public/music.mp3 and render with music on */
-function Music() {
-  const f = useCurrentFrame()
-  // Duck under the voice
-  const speaking = TIMELINE.some((s) => s.lines.some((l) => f >= s.from + l.from - 6 && f <= s.from + l.from + l.duration + 6))
-  const fadeOut = interpolate(f, [TOTAL_FRAMES - 60, TOTAL_FRAMES], [1, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })
-  return <Audio src={staticFile('music.mp3')} volume={(speaking ? 0.12 : 0.3) * fadeOut} loop />
+/**
+ * Background bed (public/music.mp3, about -13 LUFS; other tracks are trimmed to match via musicLufs). Sits ~18 dB under the voice while you speak,
+ * lifts a little between lines, and ducks smoothly so it never pumps.
+ */
+const MUSIC_REF_LUFS = -13.3
+const MUSIC_DUCKED = 0.11
+const MUSIC_OPEN = 0.2
+const MUSIC_VOL: number[] = (() => {
+  const target = new Array<number>(TOTAL_FRAMES).fill(MUSIC_OPEN)
+  for (const s of TIMELINE)
+    for (const l of s.lines)
+      for (let f = s.from + l.from - 6; f <= s.from + l.from + l.duration + 4; f++) if (f >= 0 && f < TOTAL_FRAMES) target[f] = MUSIC_DUCKED
+  // fast duck (~0.2 s), slow recovery (~0.7 s)
+  const out: number[] = []
+  let v = MUSIC_DUCKED
+  for (let f = 0; f < TOTAL_FRAMES; f++) {
+    const t = target[f]
+    v += (t - v) * (t < v ? 0.18 : 0.05)
+    out.push(v)
+  }
+  // ease in over the first half second, fade out over the last 2.5 s
+  return out.map((v, f) => v * Math.min(1, f / 15) * Math.min(1, (TOTAL_FRAMES - f) / 75))
+})()
+
+function Music({ file, lufs }: { file: string; lufs: number }) {
+  const trim = 10 ** ((MUSIC_REF_LUFS - lufs) / 20)
+  return <Audio src={staticFile(file)} loop volume={(f) => trim * MUSIC_VOL[Math.min(MUSIC_VOL.length - 1, f)]} />
 }

@@ -187,7 +187,7 @@ export function PainScene({ scene }: { scene: PlacedScene }) {
 
 const WISHES = [
   { e: '🏃', t: 'A jogging track', s: 'in your neighbourhood park', bg: C.saffron, word: 'jogging', r: -4 },
-  { e: '⚡', t: 'EV chargers', s: "you're betting big on electric", bg: C.mint, word: 'ev', r: 3 },
+  { e: '⚡', t: 'EV charging infrastructure', s: "you're betting big on electric", bg: C.mint, word: 'ev', r: 3, size: 44 },
   { e: '🚛', t: 'Garbage trucks', s: 'that actually show up', bg: C.blue, word: 'garbage', r: -2 },
   { e: '🔬', t: "India's own chip labs", s: 'made-in-India silicon', bg: C.teal, word: 'chip', r: 4 },
 ]
@@ -238,7 +238,7 @@ export function WhatIfScene({ scene }: { scene: PlacedScene }) {
                 <span className="flex items-center justify-center rounded-full bg-white" style={{ width: 132, height: 132, border: `5px solid ${INK}`, fontSize: 76 }}>
                   {w.e}
                 </span>
-                <p className="font-display font-extrabold" style={{ fontSize: 54, lineHeight: 1, marginTop: 40, letterSpacing: '-0.03em' }}>{w.t}</p>
+                <p className="font-display font-extrabold" style={{ fontSize: 'size' in w ? w.size : 54, lineHeight: 1, marginTop: 40, letterSpacing: '-0.03em' }}>{w.t}</p>
                 <p className="font-hand" style={{ fontSize: 34, lineHeight: 1.15, marginTop: 14, opacity: 0.95 }}>{w.s}</p>
               </div>
             )

@@ -4,7 +4,7 @@ import './fonts'
 import { NirmaanVideo, type VideoProps } from './Video'
 import { FPS, HEIGHT, TOTAL_FRAMES, WIDTH } from './timeline'
 
-const defaults: VideoProps = { voiceover: true, captions: true, music: false, sfx: true }
+const defaults: VideoProps = { voiceover: true, captions: true, music: true, sfx: true }
 
 export function RemotionRoot() {
   return (

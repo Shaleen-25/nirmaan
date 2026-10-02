@@ -208,7 +208,7 @@ function VouchScreen({ f, start, vouches }: { f: number; start: number; vouches:
 const ROWS = [
   { id: 'dogs', t: 'Humane stray-dog shelters', v: '48,210', s: 'Shortlisted' },
   { id: 'bus', t: 'A bus every 10 minutes', v: '41,870', s: 'Shortlisted' },
-  { id: 'creche', t: 'Crèches at metro stations', v: '22,140', s: 'In review' },
+  { id: 'creche', t: 'Crèches at metro stations', v: '13,240', s: 'In review' },
   { id: 'isl', t: 'Sign Language in schools', v: '12,760', s: 'In review' },
   { id: 'skate', t: 'Skate parks under flyovers', v: '9,640', s: 'In review' },
 ]
@@ -253,7 +253,7 @@ export function LoopScene({ scene }: { scene: PlacedScene }) {
         {ROWS.map((r, i) => {
           const rank = i + 1
           const shifted = rank >= 3 ? rank + Math.max(0, Math.min(1, rank + 1 - ourPos)) : rank
-          return <InventoryRow key={r.id} y={TOP + (shifted - 1) * ROW_H} rank={shifted} title={r.t} votes={r.v} status={r.s} />
+          return <InventoryRow key={r.id} y={TOP + (shifted - 1) * ROW_H} rank={Math.round(shifted)} title={r.t} votes={r.v} status={r.s} />
         })}
         <InventoryRow y={TOP + (ourPos - 1) * ROW_H} rank={Math.round(ourPos)} title="Joggers Park for Gachibowli" votes={ourVotes.toLocaleString('en-IN')} status={f >= stampAt ? 'Shortlisted' : 'Climbing ↑'} mine />
         {f >= stampAt && (
