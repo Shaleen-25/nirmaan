@@ -7,11 +7,11 @@ export function Logo({ className, light }: { className?: string; light?: boolean
   return (
     <span className={clsx('inline-flex items-center gap-2', className)}>
       <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-xl border-2 border-ink bg-marigold shadow-[2px_2px_0_#16130F]">
-        <span className="font-display text-xl font-extrabold leading-none text-ink">n</span>
+        <span className="font-display text-xl font-extrabold leading-none text-ink">N</span>
         <span className="absolute -right-1.5 -top-1.5 h-3.5 w-3.5 rounded-full border-2 border-ink bg-pink" />
       </span>
       <span className="flex flex-col leading-none">
-        <span className={clsx('font-display text-[22px] font-extrabold tracking-tight', light ? 'text-white' : 'text-ink')}>nirmaan</span>
+        <span className={clsx('font-display text-[22px] font-extrabold tracking-tight', light ? 'text-white' : 'text-ink')}>Nirmaan</span>
         <span className={clsx('font-hand text-[11px]', light ? 'text-white/60' : 'text-muted')}>निर्माण · build india</span>
       </span>
     </span>

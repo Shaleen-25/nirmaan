@@ -230,7 +230,7 @@ export function LogoMark({ size = 120 }: { size?: number }) {
         color: INK,
       }}
     >
-      <span style={{ marginTop: -size * 0.08 }}>n</span>
+      <span style={{ marginTop: -size * 0.08 }}>N</span>
       <span
         style={{
           position: 'absolute',
@@ -253,7 +253,7 @@ export function Wordmark({ size = 52, light = false }: { size?: number; light?: 
       <LogoMark size={size * 1.25} />
       <span className="flex flex-col" style={{ lineHeight: 1 }}>
         <span className="font-display font-extrabold" style={{ fontSize: size, letterSpacing: '-0.03em', color: light ? '#fff' : INK }}>
-          nirmaan
+          Nirmaan
         </span>
         <span className="font-hand" style={{ fontSize: size * 0.34, color: light ? 'rgba(255,255,255,.7)' : '#6B645B' }}>
           निर्माण · build india

@@ -145,7 +145,7 @@ export default function Confirm() {
                       ))}
                     </ul>
                     <div className="mt-6 flex items-center justify-between">
-                      <span className="font-display text-xl font-extrabold">nirmaan<span className="text-marigold">.</span></span>
+                      <span className="font-display text-xl font-extrabold">Nirmaan<span className="text-marigold">.</span></span>
                       <span className="font-mono text-xs font-bold">#MyTaxMySay</span>
                     </div>
                   </div>

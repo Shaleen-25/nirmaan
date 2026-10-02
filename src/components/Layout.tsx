@@ -81,7 +81,7 @@ export default function Layout() {
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <div>
               <p className="font-display text-5xl font-extrabold tracking-tight sm:text-7xl">
-                nirmaan<span className="text-pink">.</span>
+                Nirmaan<span className="text-pink">.</span>
               </p>
               <p className="mt-2 font-hand text-xl text-marigold">Don't just pay for India. Build it.</p>
             </div>

@@ -261,7 +261,7 @@ export function WhatIfScene({ scene }: { scene: PlacedScene }) {
 
 export function TitleScene({ scene }: { scene: PlacedScene }) {
   const f = useCurrentFrame()
-  const letters = 'nirmaan'.split('')
+  const letters = 'Nirmaan'.split('')
   const tag = wordAt(scene, 'meet', 'your tax')
 
   return (

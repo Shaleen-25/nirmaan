@@ -1,4 +1,4 @@
-import { AbsoluteFill, interpolate, useCurrentFrame } from 'remotion'
+import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame } from 'remotion'
 import { Check, Globe, Heart, Landmark, Mail } from 'lucide-react'
 import { Bg, BrandIcon, C, INK, LogoMark, Sfx, Squiggle, Sticker, outro, pop, ramp, rise, sp } from '../kit'
 import { OWNER, SITE_URL } from '../config'
@@ -153,12 +153,12 @@ export function PublicScene({ scene }: { scene: PlacedScene }) {
           <Sticker tone="marigold" size={40}>Building in public</Sticker>
         </div>
         <div
-          className="absolute flex items-center justify-center rounded-full font-display font-extrabold"
-          style={{ left: 160, top: 250, width: 270, height: 270, background: C.pink, border: `8px solid #fff`, boxShadow: `12px 12px 0 rgba(255,255,255,.25)`, fontSize: 116, color: '#fff', ...pop(f, line.from, -6, 0.4) }}
+          className="absolute overflow-hidden rounded-full"
+          style={{ left: 160, top: 240, width: 290, height: 290, background: C.pink, border: `8px solid #fff`, boxShadow: `12px 12px 0 ${C.pink}`, ...pop(f, line.from, -6, 0.4) }}
         >
-          {OWNER.initials}
+          <Img src={staticFile('shaleen.webp')} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 18%', transform: 'scale(1.7)', transformOrigin: '50% 26%' }} />
         </div>
-        <div className="absolute" style={{ left: 500, top: 262, ...rise(f, line.from + 4) }}>
+        <div className="absolute" style={{ left: 510, top: 262, ...rise(f, line.from + 4) }}>
           <p className="font-display font-extrabold" style={{ fontSize: 112, lineHeight: 1, letterSpacing: '-0.04em', color: '#fff' }}>{OWNER.name}</p>
           <p style={{ fontSize: 38, color: 'rgba(255,255,255,.7)', marginTop: 14 }}>{OWNER.role}</p>
         </div>
@@ -195,7 +195,7 @@ export function EndScene({ scene }: { scene: PlacedScene }) {
       <AbsoluteFill className="flex flex-col items-center justify-center" style={{ paddingBottom: 30 }}>
         <div className="flex items-center" style={{ gap: 40, ...pop(f, 0, 0, 0.5) }}>
           <LogoMark size={210} />
-          <span className="font-display font-extrabold" style={{ fontSize: 230, lineHeight: 0.9, letterSpacing: '-0.05em', color: INK }}>nirmaan</span>
+          <span className="font-display font-extrabold" style={{ fontSize: 230, lineHeight: 0.9, letterSpacing: '-0.05em', color: INK }}>Nirmaan</span>
         </div>
         <div className="relative" style={{ marginTop: 50, ...pop(f, tag, 0, 0.5) }}>
           <p className="font-display font-extrabold" style={{ fontSize: 104, letterSpacing: '-0.04em', color: INK }}>
