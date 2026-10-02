@@ -17,7 +17,8 @@ const ts = (frames: number, srt = false) => {
 }
 
 const TITLES: Record<string, string> = {
-  hook: 'Hook: the family WhatsApp group',
+  hook: 'Hook: chai-sutta breaks and house parties',
+  three: 'The three Indias',
   pain: '30% tax, zero say',
   whatif: 'What if you could choose?',
   title: 'Meet Nirmaan',

@@ -2,7 +2,7 @@ import type { ComponentType } from 'react'
 import { AbsoluteFill, Audio, Sequence, interpolate, staticFile, useCurrentFrame } from 'remotion'
 import { C, INK, Sfx, SfxOn, Wordmark } from './kit'
 import { LINES, TIMELINE, TOTAL_FRAMES, type PlacedScene, type SceneId } from './timeline'
-import { HookScene, PainScene, TitleScene, WhatIfScene } from './scenes/Intro'
+import { HookScene, PainScene, ThreeIndiasScene, TitleScene, WhatIfScene } from './scenes/Intro'
 import { Split9010Scene } from './scenes/Concept'
 import { AllocateScene, BrowseScene, MintScene, StartScene } from './scenes/Demo'
 import { MetroScene } from './scenes/Metro'
@@ -18,6 +18,7 @@ export type VideoProps = {
 
 const SCENES: Record<SceneId, ComponentType<{ scene: PlacedScene }>> = {
   hook: HookScene,
+  three: ThreeIndiasScene,
   pain: PainScene,
   whatif: WhatIfScene,
   title: TitleScene,

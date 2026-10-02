@@ -13,12 +13,12 @@ export const SITE_URL = 'nirmaan-opal-three.vercel.app'
 export const DEMO = {
   tax: 8_00_000,
   city: 'Bengaluru',
-  state: 'Karnataka',
+  hometown: 'New Delhi',
   picks: [
     { id: 'blr-lake-park', amount: 25_000, word: 'jogging' },
     { id: 'charge-bharat', amount: 25_000, word: 'chargers' },
-    { id: 'blr-garbage', amount: 15_000, word: 'garbage' },
+    { id: 'dl-library', amount: 15_000, word: 'library' },
     { id: 'chip-studio', amount: 15_000, word: 'chip' },
   ],
-  extra: ['ka-lakes', 'olympic-hubs'],
+  extra: ['blr-garbage', 'olympic-hubs'],
 }

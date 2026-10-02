@@ -4,6 +4,11 @@
     "text": "Be honest. Does every chai-sutta break at the office, every house party with friends, end with the same question… where the hell is all my tax money going?",
     "cap": false
   },
+  "three": {
+    "say": "Here's the thing. There are three Indias. India One: the ultra-rich. They invest, they create jobs, so the government listens. India Three: the underprivileged. They get schemes and subsidies to lift them out of poverty. And then, there's India Two. Us. The salaried, corporate crowd.",
+    "text": "Here's the thing. There are three Indias. India 1: the ultra-rich. They invest, they create jobs, so the government listens. India 3: the underprivileged. They get schemes and subsidies to lift them out of poverty. And then there's India 2. Us. The salaried, corporate crowd.",
+    "cap": true
+  },
   "pain": {
     "say": "We pay up to thirty percent tax. We still pay for our own water, security and schools. And we get zero say, in how a single rupee is spent.",
     "text": "We pay up to 30% tax. We still pay for our own water, security and schools. And we get zero say in how a single rupee is spent.",
@@ -40,8 +45,8 @@
     "cap": true
   },
   "browse": {
-    "say": "Browse projects on your street, in your state, and across India. Back the jogging loop by your lake. Fast chargers for the nation. Garbage trucks for your ward. And India's chip labs.",
-    "text": "Browse projects on your street, in your state and across India. Back the jogging loop by your lake, fast chargers for the nation, garbage trucks for your ward, and India's chip labs.",
+    "say": "Browse projects in the city you live in, the hometown you grew up in, or across India. Back the jogging loop by your lake. Fast chargers for the nation. A library back home. And India's chip labs.",
+    "text": "Browse projects in the city you live in, the hometown you grew up in, or across India. Back the jogging loop by your lake, fast chargers for the nation, a library back home, and India's chip labs.",
     "cap": true
   },
   "split": {

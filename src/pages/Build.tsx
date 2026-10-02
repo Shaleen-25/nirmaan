@@ -6,28 +6,31 @@ import { InfoTip, PageHeader } from '../components/ui'
 import { ProjectCard } from '../components/ProjectCard'
 import { CATEGORIES, PROJECTS, TIERS, type Category, type Tier } from '../data/projects'
 import { useStore } from '../store'
+import { CITIES } from '../data/personas'
 import { rupees } from '../lib/format'
 import { TEN_PERCENT_NOTE } from '../lib/tax'
 
-type TierFilter = 'all' | Tier
+type TierFilter = 'all' | Tier | 'hometown'
 
 export default function Build() {
-  const { cityInfo: city, budget, allocated, remaining } = useStore()
+  const { cityInfo: city, hometown, budget, allocated, remaining } = useStore()
+  const home = hometown ? CITIES[hometown] : null
   const [tier, setTier] = useState<TierFilter>('all')
   const [cat, setCat] = useState<Category | 'all'>('all')
   const [scope, setScope] = useState<'near' | 'india'>('near')
 
   const list = useMemo(() => {
     return PROJECTS.filter((p) => {
+      if (tier === 'hometown') return p.tier === 'local' && p.city === hometown && (cat === 'all' || p.category === cat)
       if (tier !== 'all' && p.tier !== tier) return false
       if (cat !== 'all' && p.category !== cat) return false
       if (scope === 'near' && city) {
         if (p.tier === 'state' && p.stateId !== city.stateId) return false
-        if (p.tier === 'local' && p.city !== city.id) return false
+        if (p.tier === 'local' && p.city !== city.id && p.city !== hometown) return false
       }
       return true
     }).sort((a, b) => ['local', 'national', 'state'].indexOf(a.tier) - ['local', 'national', 'state'].indexOf(b.tier))
-  }, [tier, cat, scope, city])
+  }, [tier, cat, scope, city, hometown])
 
   if (!city) return null
 
@@ -56,13 +59,13 @@ export default function Build() {
       <div className="sticky top-[68px] z-30 -mx-4 mb-6 space-y-3 border-b-2 border-ink bg-paper/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="brut-sm no-scrollbar flex gap-1 overflow-x-auto rounded-full bg-white p-1">
-            {(['all', 'local', 'state', 'national'] as TierFilter[]).map((t) => (
+            {(['all', 'local', ...(home ? ['hometown'] : []), 'state', 'national'] as TierFilter[]).map((t) => (
               <button
                 key={t}
                 onClick={() => setTier(t)}
                 className={clsx('whitespace-nowrap rounded-full px-4 py-2 font-display text-sm font-bold transition', tier === t ? 'bg-ink text-white' : 'text-ink-soft hover:text-ink')}
               >
-                {t === 'all' ? 'All' : t === 'local' ? `My City · ${city.name}` : t === 'state' ? `State · ${city.state}` : TIERS[t].label}
+                {t === 'all' ? 'All' : t === 'local' ? `My City · ${city.name}` : t === 'hometown' ? `Hometown · ${home?.name}` : t === 'state' ? `State · ${city.state}` : TIERS[t].label}
               </button>
             ))}
           </div>

@@ -10,10 +10,14 @@ import { DEMO } from '../config'
 import { lineOf, wordAt, type PlacedScene } from '../timeline'
 
 const byId = (id: string) => PROJECTS.find((p) => p.id === id) as Project
+/** Local projects outside where you live are shown as your hometown */
+const tierLabel = (p: Project) => (p.tier === 'local' && p.city !== 'bengaluru' ? 'Hometown' : TIERS[p.tier].label)
+
 const SHORT: Record<string, string> = {
   'blr-lake-park': 'Bellandur jogging loop',
   'charge-bharat': 'EV fast-chargers',
   'blr-garbage': 'Zero-garbage ward',
+  'dl-library': 'Library back home',
   'chip-studio': 'Bharat Chip Studios',
 }
 
@@ -194,7 +198,7 @@ export function BrowseScene({ scene }: { scene: PlacedScene }) {
           <ShoppingBasket size={32} /> {backed} backed · {rupees(backed ? 80_000 : 0)}
         </div>
         <div className="absolute flex" style={{ left: 110, top: 226, gap: 10, background: '#fff', border: `4px solid ${INK}`, borderRadius: 99, padding: 6 }}>
-          {['All', `My City · ${DEMO.city}`, `State · ${DEMO.state}`, 'National'].map((t, i) => (
+          {['All', `My City · ${DEMO.city}`, `Hometown · ${DEMO.hometown}`, 'National'].map((t, i) => (
             <span key={t} className="font-display font-bold" style={{ fontSize: 24, padding: '8px 22px', borderRadius: 99, background: i === 0 ? INK : 'transparent', color: i === 0 ? '#fff' : INK }}>
               {t}
             </span>
@@ -222,7 +226,7 @@ export function BrowseScene({ scene }: { scene: PlacedScene }) {
                 </div>
                 <div className="flex flex-1 flex-col" style={{ padding: '18px 22px' }}>
                   <div className="flex gap-2">
-                    <Pill bg={INK} fg="#fff" size={15}>{TIERS[p.tier].label}</Pill>
+                    <Pill bg={tierLabel(p) === 'Hometown' ? C.lilac : INK} fg="#fff" size={15}>{tierLabel(p)}</Pill>
                     <Pill bg={cat.soft} size={15}>{cat.label}</Pill>
                   </div>
                   <p className="font-display font-extrabold" style={{ fontSize: 31, lineHeight: 1.04, marginTop: 10, color: INK, letterSpacing: '-0.02em' }}>{p.title}</p>
@@ -309,7 +313,7 @@ export function AllocateScene({ scene }: { scene: PlacedScene }) {
               <div style={{ width: 340 }}>
                 <p className="font-display font-extrabold" style={{ fontSize: 30, lineHeight: 1.05, color: INK }}>{SHORT[p.id]}</p>
                 <div style={{ marginTop: 6 }}>
-                  <Pill bg={p.tier === 'local' ? C.pink : C.marigold} fg={p.tier === 'local' ? '#fff' : INK} size={14}>{TIERS[p.tier].label}</Pill>
+                  <Pill bg={tierLabel(p) === 'Hometown' ? C.lilac : p.tier === 'local' ? C.pink : C.marigold} fg={p.tier === 'local' ? '#fff' : INK} size={14}>{tierLabel(p)}</Pill>
                 </div>
               </div>
               <div className="relative" style={{ flex: 1 }}>

@@ -27,11 +27,12 @@ export default function Start() {
   const navigate = useNavigate()
   const [tax, setTax] = useState(store.taxPaid ?? 1_50_000)
   const [city, setCity] = useState<CityId>(store.city ?? 'bengaluru')
+  const [hometown, setHometown] = useState<CityId | null>(store.hometown)
   const [estimate, setEstimate] = useState(false)
   const [salary, setSalary] = useState(25_00_000)
 
   const go = () => {
-    store.setup(tax, city)
+    store.setup(tax, city, hometown)
     navigate('/build')
   }
 
@@ -130,6 +131,22 @@ export default function Start() {
             ))}
           </div>
         </div>
+
+        <div className="mt-8">
+          <p className="font-display text-lg font-extrabold">Hometown somewhere else? <span className="font-sans text-sm font-medium text-muted">(optional)</span></p>
+          <p className="text-sm text-muted">Back projects in your native town too, not just where you work.</p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {(Object.keys(CITIES) as CityId[]).filter((c) => c !== city).map((c) => (
+              <button
+                key={c}
+                onClick={() => setHometown(hometown === c ? null : c)}
+                className={clsx('brut-sm rounded-full px-4 py-2 font-display text-sm font-bold transition', hometown === c ? 'bg-lilac text-white' : 'bg-white hover:bg-lilac-soft')}
+              >
+                {CITIES[c].name}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="lg:sticky lg:top-28">
@@ -145,7 +162,7 @@ export default function Start() {
           </Button>
           <Link
             to="/essentials"
-            onClick={() => store.setup(tax, city)}
+            onClick={() => store.setup(tax, city, hometown)}
             className="inline-flex items-center justify-center gap-2 rounded-full py-2 text-sm font-semibold text-ink-soft hover:text-ink"
           >
             <PieChart className="h-4 w-4" /> Peek at where the other 90% goes

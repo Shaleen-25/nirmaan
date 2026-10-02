@@ -11,6 +11,8 @@ interface State {
   /** Annual income tax the user pays. Entered by hand until portal connectors exist. */
   taxPaid: number | null
   city: CityId | null
+  /** Optional native town whose local projects you also want to see */
+  hometown: CityId | null
   allocations: Record<string, number>
   confirmation: Confirmation | null
   vouched: string[]
@@ -27,7 +29,7 @@ interface Store extends State {
   remaining: number
   persona: Persona | null
   tax: TaxBreakdown | null
-  setup: (taxPaid: number, city: CityId) => void
+  setup: (taxPaid: number, city: CityId, hometown?: CityId | null) => void
   setTaxPaid: (n: number) => void
   setCity: (c: CityId) => void
   toggle: (id: string) => void
@@ -40,8 +42,8 @@ interface Store extends State {
   setIncome: (n: number) => void
 }
 
-const KEY = 'nirmaan-demo-v2'
-const EMPTY: State = { taxPaid: null, city: null, allocations: {}, confirmation: null, vouched: [], pan: null, income: null }
+const KEY = 'nirmaan-demo-v3'
+const EMPTY: State = { taxPaid: null, city: null, hometown: null, allocations: {}, confirmation: null, vouched: [], pan: null, income: null }
 
 function load(): State {
   try {
@@ -103,7 +105,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       remaining: Math.max(0, budget - allocated),
       persona,
       tax,
-      setup: (taxPaid, city) => setState((s) => ({ ...withTax(s, taxPaid), city })),
+      setup: (taxPaid, city, hometown = null) => setState((s) => ({ ...withTax(s, taxPaid), city, hometown: hometown === city ? null : hometown })),
       setTaxPaid: (taxPaid) => setState((s) => withTax(s, taxPaid)),
       setCity: (city) => setState((s) => ({ ...s, city })),
       toggle: (id) =>

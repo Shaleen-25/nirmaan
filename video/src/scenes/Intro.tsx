@@ -325,3 +325,73 @@ export function TruckArt({ scale = 1 }: { scale?: number }) {
     </div>
   )
 }
+
+/* ───────────────────────── 1b · The three Indias ───────────────────────── */
+
+const INDIAS = [
+  {
+    n: '1', key: 'india one', title: 'The ultra-rich', bg: INK, fg: '#fff', accent: C.marigold, r: -3,
+    points: ['Invest & create jobs', 'Direct line to the government'], badge: '📞 Govt listens',
+  },
+  {
+    n: '2', key: 'india two', title: 'The salaried, corporate crowd', bg: C.pink, fg: '#fff', accent: '#fff', r: 0,
+    points: ['Pays the income tax', 'Gets no say in how it is spent'], badge: '👋 That’s us',
+  },
+  {
+    n: '3', key: 'india three', title: 'The underprivileged', bg: C.mint, fg: '#fff', accent: '#fff', r: 3,
+    points: ['Schemes & subsidies', 'Support to rise out of poverty'], badge: '🤝 Govt supports',
+  },
+]
+
+export function ThreeIndiasScene({ scene }: { scene: PlacedScene }) {
+  const f = useCurrentFrame()
+  const line = lineOf(scene, 'three')
+  const twoAt = wordAt(scene, 'three', 'india two')
+  const usAt = wordAt(scene, 'three', 'us.')
+  const focus = sp(f, twoAt, { damping: 14, stiffness: 120 })
+
+  return (
+    <Bg>
+      <AbsoluteFill style={{ opacity: outro(f, scene.duration) }}>
+        <div className="absolute flex w-full justify-center" style={{ top: 70 }}>
+          <h2 className="font-display font-extrabold" style={{ fontSize: 104, letterSpacing: '-0.04em', color: INK, ...pop(f, line.from + 6, 0, 0.5) }}>
+            There are <span style={{ color: C.pink }}>three Indias.</span>
+          </h2>
+        </div>
+        {INDIAS.map((c, i) => {
+          const at = wordAt(scene, 'three', c.key)
+          const isTwo = c.n === '2'
+          const scale = isTwo ? 1 + focus * 0.1 : 1 - focus * 0.06
+          const dim = isTwo ? 1 : 1 - focus * 0.45
+          return (
+            <div
+              key={c.n}
+              className="absolute"
+              style={{ left: 110 + i * 580, top: 250, width: 540, zIndex: isTwo ? 5 : 1, opacity: dim, transform: `scale(${scale})`, transformOrigin: 'center top' }}
+            >
+              <div style={pop(f, at, c.r, 0.4)}>
+                <div style={{ background: c.bg, color: c.fg, border: `6px solid ${INK}`, boxShadow: `14px 14px 0 ${INK}`, borderRadius: 36, padding: '34px 36px', height: 560 }}>
+                  <p className="font-mono font-bold uppercase" style={{ fontSize: 24, letterSpacing: '0.2em', color: c.accent }}>India</p>
+                  <p className="font-display font-extrabold" style={{ fontSize: 170, lineHeight: 0.9, color: c.accent }}>{c.n}</p>
+                  <p className="font-display font-extrabold" style={{ fontSize: 46, lineHeight: 1.02, marginTop: 14 }}>{c.title}</p>
+                  <div className="flex flex-col" style={{ gap: 10, marginTop: 22 }}>
+                    {c.points.map((t) => (
+                      <p key={t} className="font-semibold" style={{ fontSize: 28, lineHeight: 1.2, opacity: 0.92 }}>• {t}</p>
+                    ))}
+                  </div>
+                </div>
+                <div className="absolute" style={{ right: -14, bottom: -26, ...pop(f, isTwo ? usAt : at + 14, isTwo ? -6 : 5) }}>
+                  <Sticker tone={isTwo ? 'marigold' : 'white'} size={isTwo ? 40 : 30}>{c.badge}</Sticker>
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </AbsoluteFill>
+      {INDIAS.map((c) => (
+        <Sfx key={c.n} at={wordAt(scene, 'three', c.key)} name="pop" volume={0.35} />
+      ))}
+      <Sfx at={usAt} name="stamp" volume={0.5} />
+    </Bg>
+  )
+}

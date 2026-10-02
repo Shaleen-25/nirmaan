@@ -1,5 +1,7 @@
-// Splits full ElevenLabs takes (public/vo-full/part1.mp3, part2.mp3) into one clip per script line,
-// using the 1.5s <break> pauses as boundaries, then records durations for the timeline.
+// Splits a full narration into one clip per script line, using the pauses between lines as boundaries,
+// then records durations for the timeline. Accepts either:
+//   public/vo-full/narration.(mp3|m4a|wav)   one take of the whole script, ~2s pause between lines
+//   public/vo-full/part1.mp3 + part2.mp3      two takes (first 10 lines, then the rest)
 import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
@@ -7,7 +9,8 @@ import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const ids = Object.keys(JSON.parse(readFileSync(join(root, 'src/vo-lines.json'), 'utf8')))
-const parts = [ids.slice(0, 10), ids.slice(10)]
+const single = ['mp3', 'm4a', 'wav'].map((e) => join(root, `public/vo-full/narration.${e}`)).find(existsSync)
+const parts = single ? [ids] : [ids.slice(0, 10), ids.slice(10)]
 const SR = 44100
 mkdirSync(join(root, 'public/vo'), { recursive: true })
 
@@ -68,10 +71,10 @@ function segments(x, want) {
 
 const durations = {}
 parts.forEach((lineIds, n) => {
-  const mp3 = join(root, `public/vo-full/part${n + 1}.mp3`)
-  if (!existsSync(mp3)) throw new Error(`Missing ${mp3}`)
-  const wav = mp3.replace(/\.mp3$/, '.wav')
-  execFileSync('afconvert', ['-f', 'WAVE', '-d', 'LEI16@44100', '-c', '1', mp3, wav])
+  const src = single ?? join(root, `public/vo-full/part${n + 1}.mp3`)
+  if (!existsSync(src)) throw new Error(`Missing ${src}`)
+  const wav = join(root, `public/vo-full/.decoded-${n}.wav`)
+  execFileSync('afconvert', ['-f', 'WAVE', '-d', 'LEI16@44100', '-c', '1', src, wav])
   segments(readPcm(wav), lineIds.length).forEach((seg, i) => {
     writeWav(join(root, `public/vo/${lineIds[i]}.wav`), seg)
     durations[lineIds[i]] = Math.round((seg.length / SR) * 1000) / 1000

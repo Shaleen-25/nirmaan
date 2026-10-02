@@ -37,6 +37,12 @@ const WISHES = [
   { id: 'chip-studio', t: "India's own chip labs", bg: 'bg-teal-soft' },
 ]
 
+const INDIAS = [
+  { n: '1', t: 'The ultra-rich', d: 'They invest and create jobs, so they get a direct line to the government.', cls: 'bg-ink text-white', num: 'text-marigold', r: -1.5, badge: '📞 Govt listens' },
+  { n: '2', t: 'The salaried, corporate crowd', d: 'Pays the income tax. Gets nothing visible back, and no say in how it is spent.', cls: 'bg-pink text-white', num: 'text-white', r: 0, badge: "👋 That's us" },
+  { n: '3', t: 'The underprivileged', d: 'Schemes, subsidies and support to rise out of poverty.', cls: 'bg-leaf text-white', num: 'text-white', r: 1.5, badge: '🤝 Govt supports' },
+]
+
 const TIER_TONES: Record<Tier, string> = { local: 'bg-pink-soft', state: 'bg-chakra-soft', national: 'bg-marigold-soft' }
 
 export default function Landing() {
@@ -149,6 +155,30 @@ export default function Landing() {
             })}
           </div>
         </motion.div>
+      </section>
+
+      {/* THREE INDIAS */}
+      <section>
+        <motion.div {...fade} className="max-w-3xl">
+          <Eyebrow dot="#FF4F8B">Who Nirmaan is for</Eyebrow>
+          <h2 className="mt-3 text-5xl font-extrabold leading-[0.95] sm:text-6xl">There are three Indias. One of them has no say.</h2>
+        </motion.div>
+        <div className="mt-10 grid items-stretch gap-5 md:grid-cols-3">
+          {INDIAS.map((x, i) => (
+            <motion.div key={x.n} {...fade} transition={{ ...fade.transition, delay: i * 0.08 }} style={{ rotate: x.r }} className={x.n === '2' ? 'md:-mt-4 md:mb-4' : ''}>
+              <div className={`brut relative h-full rounded-[26px] p-7 ${x.cls} ${x.n === '2' ? 'brut-lg' : ''}`}>
+                <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] opacity-80">India</p>
+                <p className={`font-display text-8xl font-extrabold leading-none ${x.num}`}>{x.n}</p>
+                <h3 className="mt-3 text-2xl font-extrabold leading-tight">{x.t}</h3>
+                <p className="mt-2 text-sm opacity-90">{x.d}</p>
+                <span className={`absolute -bottom-4 right-4 rounded-full border-2 border-ink px-3 py-1 font-display text-sm font-extrabold shadow-[2px_2px_0_#16130F] ${x.n === '2' ? 'bg-marigold text-ink' : 'bg-white text-ink'}`}>{x.badge}</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        <motion.p {...fade} className="mt-10 max-w-2xl text-lg text-ink-soft">
+          <strong className="text-ink">Nirmaan is built for India 2:</strong> the corporate taxpayer who funds the country every month and deserves a say in what it builds.
+        </motion.p>
       </section>
 
       {/* STATS */}

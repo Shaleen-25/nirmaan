@@ -10,7 +10,7 @@ export const LINES = lines as Record<LineId, { say: string; text: string; cap: b
 const DUR = durations as Record<LineId, number>
 
 export type SceneId =
-  | 'hook' | 'pain' | 'whatif' | 'title' | 'split9010' | 'start' | 'browse' | 'allocate'
+  | 'hook' | 'three' | 'pain' | 'whatif' | 'title' | 'split9010' | 'start' | 'browse' | 'allocate'
   | 'mint' | 'metro' | 'pitch' | 'loop' | 'winwin' | 'edge' | 'public' | 'end'
 
 interface SceneDef {
@@ -26,6 +26,7 @@ interface SceneDef {
 /** Scene order and which voice lines play in each. Durations are fitted to the voiceover. */
 const DEFS: SceneDef[] = [
   { id: 'hook', lines: ['hook'], min: 6.8, lead: 0.35 },
+  { id: 'three', lines: ['three'], min: 15 },
   { id: 'pain', lines: ['pain'], min: 8.8 },
   { id: 'whatif', lines: ['whatif', 'wishes'], min: 10.5, gap: 0.3 },
   { id: 'title', lines: ['meet'], min: 3.8, lead: 0.3 },
