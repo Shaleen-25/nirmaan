@@ -24,7 +24,7 @@ const fade = {
 }
 
 const STEPS = [
-  { icon: SlidersHorizontal, t: 'Slide in your tax', d: 'Tell us what you pay. 10% of it becomes yours to direct.', bg: 'bg-marigold', rot: -2 },
+  { icon: SlidersHorizontal, t: 'Slide in your tax', d: 'Tell us the tax you already pay. 10% of it (not on top of it) becomes yours to direct.', bg: 'bg-marigold', rot: -2 },
   { icon: Vote, t: 'Back what matters', d: 'Chip studios for India, a jogging loop for your ward, or both.', bg: 'bg-pink text-white', rot: 1.5 },
   { icon: Eye, t: 'Ride the Money Metro', d: 'Watch your e₹ travel, stop by stop, until the project goes live.', bg: 'bg-chakra text-white', rot: -1 },
   { icon: Lightbulb, t: 'Pitch the next one', d: 'Missing something? Post an idea, rally vouches, reach the next Budget.', bg: 'bg-leaf text-white', rot: 2 },
@@ -41,6 +41,37 @@ const INDIAS = [
   { n: '1', t: 'The ultra-rich', d: 'They invest and create jobs, so they get a direct line to the government.', cls: 'bg-ink text-white', num: 'text-marigold', r: -1.5, badge: '📞 Govt listens' },
   { n: '2', t: 'The salaried, corporate crowd', d: 'Pays the income tax. Gets nothing visible back, and no say in how it is spent.', cls: 'bg-pink text-white', num: 'text-white', r: 0, badge: "👋 That's us" },
   { n: '3', t: 'The underprivileged', d: 'Schemes, subsidies and support to rise out of poverty.', cls: 'bg-leaf text-white', num: 'text-white', r: 1.5, badge: '🤝 Govt supports' },
+]
+
+const FAQ = [
+  {
+    q: 'Is this an extra 10% tax?',
+    a: 'Nope',
+    d: 'Not a rupee more. The 10% is carved out of the income tax you already pay. Same money, same total. The only new thing is your say in where it goes.',
+    tone: 'marigold' as const,
+    r: -1,
+  },
+  {
+    q: 'Why 10%?',
+    a: 'Placeholder',
+    d: "It's a proof-of-concept number to make the idea concrete. The right share, whether 2%, 10% or something else, is for the government and its economists to work out.",
+    tone: 'white' as const,
+    r: 1,
+  },
+  {
+    q: 'So what can it fund?',
+    a: 'The debatable stuff',
+    d: 'Not the essentials: defence, interest, salaries and pensions get paid regardless. Only discretionary spend on development and well-being. Better street lights in Nagpur, or renovating that one park? The people who walk that street at night know best.',
+    tone: 'mint' as const,
+    r: 0.5,
+  },
+  {
+    q: 'Who puts projects on the list?',
+    a: 'Govt + you',
+    d: "The government lists projects it has approved but not prioritised. Don't see yours? Pitch it, rally vouches, and land on the shortlist for the next Budget.",
+    tone: 'lilac' as const,
+    r: -0.5,
+  },
 ]
 
 const TIER_TONES: Record<Tier, string> = { local: 'bg-pink-soft', state: 'bg-chakra-soft', national: 'bg-marigold-soft' }
@@ -81,8 +112,8 @@ export default function Landing() {
             transition={{ delay: 0.2, duration: 0.7 }}
             className="mt-8 max-w-lg text-lg text-ink-soft sm:text-xl"
           >
-            90% of your income tax keeps India running. With <strong className="text-ink">Nirmaan</strong>, you decide what the other{' '}
-            <strong className="text-ink">10%</strong> builds, and you watch every rupee get there.
+            Not a rupee extra. 90% of the income tax you <em>already</em> pay keeps India running. With <strong className="text-ink">Nirmaan</strong>, you
+            decide what the other <strong className="text-ink">10%</strong> builds, and you watch every rupee get there.
           </motion.p>
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-9 flex flex-wrap items-center gap-3">
             <Link to="/start" className="brut press inline-flex items-center gap-2 rounded-full bg-marigold px-7 py-4 font-display text-lg font-extrabold">
@@ -121,6 +152,7 @@ export default function Landing() {
           className="-rotate-1 bg-ink text-marigold"
           items={[
             'Your tax, your say',
+            'No extra tax. Not one rupee.',
             `${crore(INCOME_TAX_BE_CR)} income tax in ${BUDGET_YEAR}`,
             `10% = ${crore(INCOME_TAX_BE_CR * 0.1)} in citizens' hands`,
             'Every rupee tracked on e₹',
@@ -223,6 +255,27 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* WAIT, BUT… */}
+      <section>
+        <motion.div {...fade} className="max-w-2xl">
+          <Eyebrow dot="#FF7A1A">Wait, but…</Eyebrow>
+          <h2 className="mt-3 text-5xl font-extrabold leading-[0.95] sm:text-6xl">The questions every friend asks first.</h2>
+        </motion.div>
+        <div className="mt-12 grid gap-5 md:grid-cols-2">
+          {FAQ.map((q, i) => (
+            <motion.div key={q.q} {...fade} transition={{ ...fade.transition, delay: i * 0.06 }} style={{ rotate: q.r }}>
+              <Card tone={q.tone} className="h-full p-6 sm:p-7">
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="text-2xl font-extrabold leading-tight sm:text-[1.7rem]">{q.q}</h3>
+                  <span className="shrink-0 rounded-full border-2 border-ink bg-white px-3 py-1 font-display text-sm font-extrabold shadow-[2px_2px_0_#16130F]">{q.a}</span>
+                </div>
+                <p className="mt-3 text-ink-soft">{q.d}</p>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* MONEY METRO */}
       <motion.section {...fade}>
         <Card size="lg" className="overflow-hidden p-6 sm:p-10">
@@ -253,11 +306,11 @@ export default function Landing() {
             10% however you like.
           </p>
         </motion.div>
-        <div className="mt-10 grid gap-5 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-3">
           {(['local', 'state', 'national'] as Tier[]).map((tier, i) => (
             <motion.div key={tier} {...fade} transition={{ ...fade.transition, delay: i * 0.08 }}>
               <Card className={`h-full p-6 ${TIER_TONES[tier]}`}>
-                <div className="flex items-baseline justify-between">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-3">
                   <h3 className="text-3xl font-extrabold">{TIERS[tier].label}</h3>
                   <span className="font-hand text-base text-ink-soft">{TIERS[tier].blurb}</span>
                 </div>

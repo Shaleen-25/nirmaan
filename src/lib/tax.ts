@@ -6,7 +6,7 @@ export const STANDARD_DEDUCTION = 75_000
 export const PARTICIPATION_SHARE = 0.1
 
 export const TEN_PERCENT_NOTE =
-  "We're starting this pilot at 10%, in discussion with the government and subject to feasibility, so the percentage may change. For this demo, 90% of your income tax goes to essential government spending and 10% is where you have a say."
+  "Not an extra tax: the 10% is carved out of the income tax you already pay. And 10% is a proof-of-concept number for this demo, not policy. In practice, the right share would be set by the government and its economists."
 
 const SLABS: [number, number][] = [
   [4_00_000, 0],

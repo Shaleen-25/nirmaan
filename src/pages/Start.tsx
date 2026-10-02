@@ -154,7 +154,7 @@ export default function Start() {
           <TaxReceipt tax={tax} delay={0.4} onStub={go} />
         </div>
         <p className="mt-14 text-center text-sm text-ink-soft">
-          <Mark>10% is fixed</Mark> for this pilot <InfoTip>{TEN_PERCENT_NOTE}</InfoTip>
+          <Mark>Not a rupee extra.</Mark> 10% of tax you already pay <InfoTip>{TEN_PERCENT_NOTE}</InfoTip>
         </p>
         <div className="mt-6 grid gap-3">
           <Button variant="marigold" className="w-full py-4 text-base" onClick={go} disabled={tax <= 0}>

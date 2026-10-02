@@ -23,7 +23,7 @@ export default function Essentials() {
         sub={
           <>
             Your <strong className="text-ink">{rupees(base)}</strong> mapped onto the Union Budget {BUDGET_YEAR}: how every rupee of central spending
-            is divided.
+            is divided. Nirmaan never touches these essentials: your say is only over the discretionary 10%.
           </>
         }
         right={
