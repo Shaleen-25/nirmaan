@@ -31,9 +31,9 @@ interface SceneDef {
 const DEFS: SceneDef[] = [
   { id: 'proof', lines: ['q', 'this'], min: 5, lead: 0.15, gap: 0.25, tail: 0.6 },
   { id: 'brand', lines: ['built'], min: 1.9, lead: 0.2, tail: 0.5 },
-  { id: 'app', lines: ['pick'], min: 5.8, lead: 0.2, tail: 0.9 },
+  { id: 'app', lines: ['pick'], min: 5.4, lead: 0.2, tail: 0.9 },
   // a long hold so there is time to tap the link sticker
-  { id: 'end', lines: ['end'], min: 4, lead: 0.2, tail: 1.8 },
+  { id: 'end', lines: ['end'], min: 4, lead: 0.2, tail: 1.4 },
 ]
 
 export interface StoryPlacedLine {

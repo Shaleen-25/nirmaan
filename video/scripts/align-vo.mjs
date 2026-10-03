@@ -47,6 +47,8 @@ const FIXES = [
   [/\bin your city you live in\b/g, 'in the city you live in'],
   [/\byou are actually helping it build it\b/g, "you're actually helping build it"],
   [/\bhave hundred\b/g, 'have a hundred'],
+  [/\broads looks\b/g, 'roads look'],
+  [/\blike this$/, 'like this?'],
 ]
 
 const src = ['m4a', 'mp3', 'wav'].map((e) => join(root, `public/vo-full/${SET.take}.${e}`)).find(existsSync)
@@ -120,7 +122,7 @@ const ranges = ids.map((_, li) => [starts[li], li + 1 < ids.length ? starts[li +
 const wavPath = join(root, 'public/vo-full/.decoded.wav')
 execFileSync('afconvert', ['-f', 'WAVE', '-d', 'LEI16@44100', '-c', '1', src, wavPath])
 const raw = readPcm(wavPath)
-const x = highpass(raw, 80)
+const x = expand(highpass(raw, 80))
 const rmsAt = (t) => {
   const c = Math.round(t * SR)
   let e = 0
@@ -241,7 +243,7 @@ function captionsFor(ws) {
       for (let k = a; k < b; k++) locked.add(k)
     }
   }
-  const SOFT = /^(and|or|but|that|to|in|of|with|for|because|until|on|so|the|a|an|why|what|is)$/i
+  const SOFT = /^(and|or|but|that|to|in|of|with|for|because|until|on|so|the|a|an|why|what|where|when|is)$/i
   const breakCost = (i) => {
     if (i === ws.length - 1) return 0
     if (locked.has(i)) return 100
@@ -279,6 +281,37 @@ function captionsFor(ws) {
 
 function round(t) {
   return Math.round(t * 1000) / 1000
+}
+
+/**
+ * Gentle downward expander: turns room hiss down between words (up to 12 dB) without touching speech.
+ * The threshold sits 14 dB above the take's own noise floor, so a clean studio take is left almost as is.
+ */
+function expand(input) {
+  const win = Math.round(SR * 0.02)
+  const levels = []
+  for (let i = 0; i + win < input.length; i += win) {
+    let e = 0
+    for (let j = i; j < i + win; j++) e += input[j] * input[j]
+    levels.push(10 * Math.log10(e / win + 1e-12))
+  }
+  levels.sort((a, b) => a - b)
+  const thr = levels[Math.floor(levels.length * 0.1)] + 14
+  // ~20 ms running RMS, symmetric so hiss reads at its true level rather than its peaks
+  const avg = Math.exp(-1 / (0.02 * SR))
+  const open = Math.exp(-1 / (0.003 * SR))
+  const close = Math.exp(-1 / (0.12 * SR))
+  const out = new Float32Array(input.length)
+  let env = 0
+  let g = 1
+  for (let i = 0; i < input.length; i++) {
+    env = input[i] * input[i] + (env - input[i] * input[i]) * avg
+    const db = 10 * Math.log10(env + 1e-12)
+    const target = 10 ** (-Math.min(12, Math.max(0, thr - db)) / 20)
+    g = target > g ? target + (g - target) * open : target + (g - target) * close
+    out[i] = input[i] * g
+  }
+  return out
 }
 
 function highpass(input, hz) {

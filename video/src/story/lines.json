@@ -1,12 +1,12 @@
 {
   "q": {
     "say": "Don't you guys wonder where our tax money goes... when our roads look like this?",
-    "text": "Don't you guys wonder where our tax money goes… when our roads look like this?",
+    "text": "Don't you guys wonder where all our tax money goes when our roads look like this?",
     "cap": true
   },
   "this": {
     "say": "And this?",
-    "text": "And this?",
+    "text": "and this?",
     "cap": false
   },
   "built": {
@@ -16,12 +16,12 @@
   },
   "pick": {
     "say": "You pick where a slice of the tax you already pay goes, and track every rupee.",
-    "text": "You pick where a slice of the tax you already pay goes, and track every rupee.",
+    "text": "You pick where a slice of the tax you already pay goes and track every rupee.",
     "cap": true
   },
   "end": {
     "say": "Less ranting, more building. Tap the link!",
-    "text": "Less ranting, more building. Tap the link!",
+    "text": "Less ranting, more building. Tap the link.",
     "cap": false
   }
 }

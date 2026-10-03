@@ -93,10 +93,10 @@ function Wipe({ color }: { color: string }) {
 
 /* ───────── sound ───────── */
 
-/** Same bed and levels as the main video: ~18 dB under the voice, a little lift in the gaps */
+/** Same bed as the main video, a touch more present for phone speakers: ~13 dB under the voice, lifting in the gaps */
 const MUSIC_REF_LUFS = -13.3
-const MUSIC_DUCKED = 0.11
-const MUSIC_OPEN = 0.2
+const MUSIC_DUCKED = 0.16
+const MUSIC_OPEN = 0.28
 const MUSIC_VOL: number[] = (() => {
   const target = new Array<number>(STORY_TOTAL_FRAMES).fill(MUSIC_OPEN)
   for (const s of STORY_TIMELINE)
