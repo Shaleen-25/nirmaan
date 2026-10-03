@@ -8,7 +8,10 @@
     "vo": "node scripts/vo.mjs",
     "sfx": "node scripts/sfx.mjs",
     "script": "npx tsx scripts/export-script.ts",
-    "render": "remotion render src/index.ts NirmaanDemo out/nirmaan-demo.mp4 --codec=h264 --crf=18"
+    "render": "remotion render src/index.ts NirmaanDemo out/nirmaan-demo.mp4 --codec=h264 --crf=18",
+    "story:scratch": "SAY_RATE=185 node scripts/vo.mjs --story",
+    "story:align": "node scripts/align-vo.mjs --story",
+    "story:render": "remotion render src/index.ts NirmaanStory out/nirmaan-story.mp4 --codec=h264 --crf=18"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.532",

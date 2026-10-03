@@ -6,13 +6,18 @@
 //      trims over-long pauses, high-passes and levels the voice
 //   4. Writes public/vo/<id>.wav, src/vo-durations.json and src/vo-words.json (word + caption timings),
 //      and updates each line's text in src/vo-lines.json to what was actually said
-// Run: node scripts/align-vo.mjs
+// Run: node scripts/align-vo.mjs            (main video: public/vo-full/narration.m4a)
+//      node scripts/align-vo.mjs --story    (Instagram story: public/vo-full/story.m4a)
 import { execFileSync, spawnSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
+const STORY = process.argv.includes('--story')
+const SET = STORY
+  ? { take: 'story', lines: 'src/story/lines.json', out: 'public/vo-story', durations: 'src/story/durations.json', words: 'src/story/words.json' }
+  : { take: 'narration', lines: 'src/vo-lines.json', out: 'public/vo', durations: 'src/vo-durations.json', words: 'src/vo-words.json' }
 const SR = 44100
 const MAX_PAUSE = 0.85 // pauses inside a line longer than this are trimmed…
 const KEEP_PAUSE = 0.65 // …down to this
@@ -44,14 +49,14 @@ const FIXES = [
   [/\bhave hundred\b/g, 'have a hundred'],
 ]
 
-const src = ['m4a', 'mp3', 'wav'].map((e) => join(root, `public/vo-full/narration.${e}`)).find(existsSync)
-if (!src) throw new Error('Put the recording at public/vo-full/narration.m4a (or .mp3/.wav)')
-const linesPath = join(root, 'src/vo-lines.json')
+const src = ['m4a', 'mp3', 'wav'].map((e) => join(root, `public/vo-full/${SET.take}.${e}`)).find(existsSync)
+if (!src) throw new Error(`Put the recording at public/vo-full/${SET.take}.m4a (or .mp3/.wav)`)
+const linesPath = join(root, SET.lines)
 const LINES = JSON.parse(readFileSync(linesPath, 'utf8'))
 const ids = Object.keys(LINES)
 
 /* ── 1. transcript ─────────────────────────────────────────── */
-const transcriptPath = join(root, 'public/vo-full/narration.transcript.json')
+const transcriptPath = join(root, `public/vo-full/${SET.take}.transcript.json`)
 if (!existsSync(transcriptPath)) {
   const env = existsSync(join(root, '.env')) ? readFileSync(join(root, '.env'), 'utf8') : ''
   const key = process.env.ELEVENLABS_API_KEY ?? env.match(/ELEVENLABS_API_KEY=(.+)/)?.[1]?.trim()
@@ -122,7 +127,7 @@ const rmsAt = (t) => {
   for (let i = c - 441; i < c + 441; i++) e += (x[i] ?? 0) ** 2
   return Math.sqrt(e / 882)
 }
-mkdirSync(join(root, 'public/vo'), { recursive: true })
+mkdirSync(join(root, SET.out), { recursive: true })
 const durations = {}
 const timings = {}
 const report = []
@@ -212,10 +217,10 @@ for (let round = 0; round < 6; round++) {
   }
   gain *= 10 ** ((TARGET_LUFS - lufs) / 20)
 }
-for (const [id, c] of Object.entries(leveled)) writeWav(join(root, `public/vo/${id}.wav`), c)
+for (const [id, c] of Object.entries(leveled)) writeWav(join(root, `${SET.out}/${id}.wav`), c)
 
-writeFileSync(join(root, 'src/vo-durations.json'), JSON.stringify(durations, null, 2) + '\n')
-writeFileSync(join(root, 'src/vo-words.json'), JSON.stringify(timings) + '\n')
+writeFileSync(join(root, SET.durations), JSON.stringify(durations, null, 2) + '\n')
+writeFileSync(join(root, SET.words), JSON.stringify(timings) + '\n')
 writeFileSync(linesPath, JSON.stringify(LINES, null, 2) + '\n')
 report.forEach((r) => console.log(r))
 console.log(`Total voice ${Object.values(durations).reduce((p, q) => p + q, 0).toFixed(1)}s. Re-render to fit.`)

@@ -4,6 +4,7 @@
 //   node scripts/vo.mjs                      → macOS `say` scratch voice (Rishi, Indian English)
 //   ELEVENLABS_API_KEY=… ELEVENLABS_VOICE_ID=… node scripts/vo.mjs   → ElevenLabs studio voice
 //   node scripts/vo.mjs --measure            → keep your own recordings in public/vo (wav/mp3/m4a), just re-time
+//   add --story to any of these for the 9:16 Instagram story (src/story/lines.json → public/vo-story)
 //
 // Keys can also live in video/.env (git-ignored).
 import { execFileSync } from 'node:child_process'
@@ -12,7 +13,8 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const outDir = join(root, 'public/vo')
+const STORY = process.argv.includes('--story')
+const outDir = join(root, STORY ? 'public/vo-story' : 'public/vo')
 mkdirSync(outDir, { recursive: true })
 
 // Minimal .env loader
@@ -24,7 +26,7 @@ if (existsSync(envFile)) {
   }
 }
 
-const lines = JSON.parse(readFileSync(join(root, 'src/vo-lines.json'), 'utf8'))
+const lines = JSON.parse(readFileSync(join(root, STORY ? 'src/story/lines.json' : 'src/vo-lines.json'), 'utf8'))
 const MEASURE = process.argv.includes('--measure')
 const only = process.argv.slice(2).filter((a) => !a.startsWith('--'))
 const KEY = process.env.ELEVENLABS_API_KEY
@@ -80,7 +82,7 @@ function sayClip(text, file) {
   unlinkSync(aiff)
 }
 
-const durFile = join(root, 'src/vo-durations.json')
+const durFile = join(root, STORY ? 'src/story/durations.json' : 'src/vo-durations.json')
 const durations = existsSync(durFile) ? JSON.parse(readFileSync(durFile, 'utf8')) : {}
 const engine = MEASURE ? 'your recordings' : KEY && VOICE ? `ElevenLabs (${VOICE})` : `macOS say (${SAY_VOICE})`
 console.log(`Voice: ${engine}`)
@@ -95,7 +97,7 @@ for (const [i, [id, { say }]] of entries.entries()) {
       const src = join(outDir, `${id}.${ext}`)
       if (existsSync(src)) execFileSync('afconvert', ['-f', 'WAVE', '-d', 'LEI16@44100', '-c', '1', src, file])
     }
-    if (!existsSync(file)) throw new Error(`Missing recording for "${id}" in public/vo`)
+    if (!existsSync(file)) throw new Error(`Missing recording for "${id}" in ${outDir}`)
   } else if (KEY && VOICE) await eleven(say, file, entries[i - 1]?.[1].say, entries[i + 1]?.[1].say)
   else sayClip(say, file)
   durations[id] = Math.round(wavDuration(file) * 1000) / 1000
