@@ -1,8 +1,8 @@
 import type { ComponentType, CSSProperties } from 'react'
 import { AbsoluteFill, Audio, Easing, Img, Sequence, interpolate, staticFile, useCurrentFrame } from 'remotion'
-import { ArrowDown, BadgeCheck, Camera, Check, Lock, Wallet } from 'lucide-react'
+import { ArrowDown, Check } from 'lucide-react'
 import { DELIVERED, PROJECTS } from '../../../src/data/projects'
-import { Bg, C, Coin, INK, LogoMark, ProjectGlyph, Sfx, SfxOn, Sticker, pop, ramp, rise, sp } from '../kit'
+import { Bg, C, INK, LogoMark, ProjectGlyph, Sfx, SfxOn, Sticker, pop, ramp, rise, rupees, sp } from '../kit'
 import { FPS } from '../timeline'
 import {
   STORY_LINES, STORY_TIMELINE, STORY_TIMINGS, STORY_TOTAL_FRAMES, storyLineOf, storyWordAt,
@@ -347,105 +347,196 @@ function BrandScene({ scene }: { scene: StoryPlacedScene }) {
 // the fixes for exactly what the photos show (the pothole drive is one of last year's delivered projects)
 const PICKS = ['blr-potholes', 'blr-garbage', 'blr-lake-park']
 const ALL_PROJECTS = [...PROJECTS, ...Object.values(DELIVERED)]
-const STATIONS = [
-  { t: 'Wallet', icon: Wallet },
-  { t: 'Escrow', icon: Lock },
-  { t: 'Agency', icon: BadgeCheck },
-  { t: 'Live ✓', icon: Camera },
-]
-const METRO_X0 = 150
-const METRO_X1 = 930
-const METRO_Y = 1312
+
+// ₹8 L income tax → the 10% slice (₹80,000) split 3:3:2 across the picks, then tracked as it gets spent
+const TAX = 8_00_000
+const SPLIT = [30_000, 30_000, 20_000]
+const SPENT = [21_000, 12_000, 6_000]
+const BAR = { left: 98, top: 562, w: 884, h: 64 }
+const SLICE_X = BAR.left + BAR.w * 0.9
+const SLICE_W = BAR.w * 0.1
+const CARD_TOP = 760
+const CARD_STEP = 190
+const CARD_H = 172
+const PILL = { left: 1080 - 98 - 200, top: 22, w: 200, h: 58 }
 
 function AppScene({ scene }: { scene: StoryPlacedScene }) {
   const f = useCurrentFrame()
   const pickAt = storyWordAt(scene, 'pick', 'pick')
+  const sliceAt = storyWordAt(scene, 'pick', 'slice')
   const alreadyAt = storyWordAt(scene, 'pick', 'already')
+  const goesAt = storyWordAt(scene, 'pick', 'goes')
   const trackAt = storyWordAt(scene, 'pick', 'track')
-  const ride = ramp(f, [trackAt + 2, trackAt + 30], [0, 1], Easing.bezier(0.45, 0, 0.25, 1))
   const projects = PICKS.map((id) => ALL_PROJECTS.find((p) => p.id === id)!)
+  const lift = sp(f, sliceAt, { damping: 10, stiffness: 200 })
+  const emptied = f >= goesAt
 
   return (
     <Bg>
       <div className="absolute w-full" style={{ top: 270, padding: '0 70px' }}>
-        <h2 className="font-display font-extrabold" style={{ fontSize: 90, lineHeight: 0.95, letterSpacing: '-0.045em', color: INK, ...rise(f, -4) }}>
+        <h2 className="font-display font-extrabold" style={{ fontSize: 84, lineHeight: 0.95, letterSpacing: '-0.045em', color: INK, ...rise(f, -4) }}>
           You pick what
           <br />
           your tax <span style={{ color: C.pink }}>builds.</span>
         </h2>
       </div>
 
+      {/* your income tax, with the 10% slice that tears off */}
+      <div className="absolute" style={{ left: 70, right: 70, top: 470, height: 250, background: '#fff', border: `5px solid ${INK}`, borderRadius: 28, boxShadow: `8px 8px 0 ${INK}`, ...rise(f, 0, 50) }}>
+        <div className="flex items-baseline justify-between" style={{ padding: '20px 28px 0' }}>
+          <span className="font-mono font-bold uppercase" style={{ fontSize: 22, letterSpacing: '0.16em', color: INK }}>Your income tax</span>
+          <span className="font-display font-extrabold" style={{ fontSize: 46, letterSpacing: '-0.02em', color: INK }}>{rupees(TAX)}</span>
+        </div>
+      </div>
+      <div className="absolute inset-0" style={{ ...rise(f, 0, 50) }}>
+        <div
+          className="absolute flex items-center"
+          style={{ left: BAR.left, top: BAR.top, width: BAR.w * 0.9 - 8, height: BAR.h, background: INK, borderRadius: 14, paddingLeft: 22 }}
+        >
+          <span className="font-sans" style={{ fontSize: 24, fontWeight: 700, color: '#fff' }}>90% keeps India running</span>
+        </div>
+        <div
+          className="absolute flex items-center justify-center font-display font-extrabold"
+          style={{
+            left: SLICE_X,
+            top: BAR.top,
+            width: SLICE_W,
+            height: BAR.h,
+            borderRadius: 14,
+            fontSize: 26,
+            color: INK,
+            background: emptied ? 'transparent' : C.marigold,
+            border: emptied ? `4px dashed ${INK}` : `4px solid ${INK}`,
+            transform: `translateY(${-12 * lift}px) rotate(${6 * lift}deg) scale(${1 + 0.12 * lift})`,
+            zIndex: 5,
+          }}
+        >
+          {emptied ? '' : '10%'}
+        </div>
+        <div className="absolute" style={{ left: BAR.left, top: BAR.top + BAR.h + 18, ...pop(f, alreadyAt, -3, 0.3) }}>
+          <Sticker tone="mint" size={28}>
+            ₹0 extra · already paid
+          </Sticker>
+        </div>
+        <p
+          className="absolute font-display font-extrabold"
+          style={{ right: 1080 - (BAR.left + BAR.w), top: BAR.top + BAR.h + 18, fontSize: 30, color: C.pink, ...rise(f, sliceAt + 3, 20) }}
+        >
+          {rupees(TAX / 10)} is yours to direct
+        </p>
+      </div>
+
+      {/* the projects you picked */}
       {projects.map((p, i) => {
-        const at = pickAt + i * 7
-        const on = sp(f, at, { damping: 12, stiffness: 230 })
+        const top = CARD_TOP + i * CARD_STEP
+        const picked = sp(f, pickAt + i * 7, { damping: 12, stiffness: 230 })
+        const spend = ramp(f, [trackAt + i * 5, trackAt + i * 5 + 26])
         return (
           <div
             key={p.id}
-            className="absolute flex items-center"
+            className="absolute"
             style={{
               left: 70,
               right: 70,
-              top: 520 + i * 192,
-              height: 168,
-              gap: 26,
-              padding: '0 28px',
+              top,
+              height: CARD_H,
+              padding: '22px 28px',
               borderRadius: 28,
               border: `5px solid ${INK}`,
               boxShadow: `8px 8px 0 ${INK}`,
-              background: on > 0.5 ? '#FFF3D1' : '#fff',
-              ...rise(f, 2 + i * 4, 60),
+              background: picked > 0.5 ? '#FFF3D1' : '#fff',
+              ...rise(f, 4 + i * 4, 60),
             }}
           >
-            <ProjectGlyph project={p} size={96} />
-            <div className="min-w-0 flex-1">
-              <p className="font-display font-extrabold" style={{ fontSize: 38, lineHeight: 1.05, letterSpacing: '-0.02em', color: INK }}>{p.title}</p>
-              <p className="font-sans" style={{ fontSize: 25, color: '#6B645B', marginTop: 6 }}>{p.where}</p>
+            <div className="flex items-center" style={{ gap: 22, paddingRight: PILL.w + 6 }}>
+              <span className="relative">
+                <ProjectGlyph project={p} size={80} />
+                <span
+                  className="absolute flex items-center justify-center rounded-full"
+                  style={{ left: -14, top: -14, width: 44, height: 44, background: C.mint, border: `4px solid ${INK}`, transform: `scale(${Math.min(1.15, picked)})` }}
+                >
+                  <Check size={26} strokeWidth={4.5} color="#fff" />
+                </span>
+              </span>
+              <div className="min-w-0">
+                <p className="font-display font-extrabold" style={{ fontSize: 32, lineHeight: 1.05, letterSpacing: '-0.02em', color: INK }}>{p.title}</p>
+                <p className="font-sans" style={{ fontSize: 22, color: '#6B645B', marginTop: 4 }}>{p.where}</p>
+              </div>
             </div>
+            {/* where the money goes: fills as it's spent, milestone by milestone */}
+            <div className="flex items-center" style={{ gap: 18, marginTop: 14, opacity: f >= trackAt - 4 ? 1 : 0.35 }}>
+              <div className="flex-1" style={{ height: 22, borderRadius: 99, border: `4px solid ${INK}`, background: '#fff', overflow: 'hidden' }}>
+                <div style={{ width: `${(SPENT[i] / SPLIT[i]) * spend * 100}%`, height: '100%', background: C.saffron }} />
+              </div>
+              <span className="font-mono font-bold" style={{ fontSize: 22, color: INK, width: 230, textAlign: 'right' }}>
+                {f >= trackAt - 4 ? `${rupees(Math.round((SPENT[i] * spend) / 100) * 100)} spent` : 'not spent yet'}
+              </span>
+            </div>
+            {/* empty slot until its share of the slice lands */}
             <span
-              className="flex shrink-0 items-center justify-center rounded-full"
-              style={{ width: 84, height: 84, border: `5px solid ${INK}`, background: on > 0.5 ? C.mint : '#fff', transform: `scale(${1 + 0.25 * Math.sin(Math.min(1, on) * Math.PI)})` }}
+              className="absolute flex items-center justify-center rounded-full font-display font-bold"
+              style={{ left: PILL.left - 70 - 5, top: PILL.top - 5, width: PILL.w, height: PILL.h, border: `4px dashed rgba(22,19,15,.35)`, fontSize: 24, color: 'rgba(22,19,15,.4)' }}
             >
-              <Check size={48} strokeWidth={4} color="#fff" style={{ opacity: on, transform: `scale(${on})` }} />
+              ₹ ?
             </span>
           </div>
         )
       })}
 
-      <div className="absolute flex w-full justify-center" style={{ top: 1112, ...pop(f, alreadyAt, -3, 0.3) }}>
-        <Sticker tone="mint" size={40}>
-          From tax you already pay · ₹0 extra
-        </Sticker>
+      {/* the running total across all three, as it would show on the public ledger */}
+      <div className="absolute flex w-full justify-center" style={{ top: CARD_TOP + 3 * CARD_STEP + 6, ...pop(f, trackAt + 10, -2, 0.5) }}>
+        <span
+          className="inline-flex items-center rounded-full font-display font-extrabold"
+          style={{ gap: 14, background: INK, color: '#fff', border: `4px solid ${INK}`, boxShadow: `6px 6px 0 rgba(22,19,15,.25)`, padding: '14px 30px', fontSize: 32 }}
+        >
+          <span style={{ color: C.marigold }}>e₹ ledger</span>
+          {rupees(Math.round(SPENT.reduce((sum, v, i) => sum + v * ramp(f, [trackAt + i * 5, trackAt + i * 5 + 26]), 0) / 100) * 100)} of {rupees(TAX / 10)} spent
+        </span>
       </div>
 
-      {/* mini Money Metro */}
-      <div className="absolute inset-0" style={{ ...rise(f, trackAt - 8, 50) }}>
-        <div className="absolute" style={{ left: METRO_X0, width: METRO_X1 - METRO_X0, top: METRO_Y - 8, height: 16, borderRadius: 99, background: '#fff', border: `4px solid ${INK}` }}>
-          <div style={{ width: `${ride * 100}%`, height: '100%', background: C.saffron, borderRadius: 99 }} />
-        </div>
-        {STATIONS.map((st, i) => {
-          const x = METRO_X0 + ((METRO_X1 - METRO_X0) * i) / (STATIONS.length - 1)
-          const reached = ride >= i / (STATIONS.length - 1) - 0.001
-          const Icon = st.icon
+      {/* the slice splits and each piece flies into its project */}
+      {f >= goesAt &&
+        SPLIT.map((amt, i) => {
+          const before = SPLIT.slice(0, i).reduce((a, b) => a + b, 0)
+          const total = SPLIT.reduce((a, b) => a + b, 0)
+          const x0 = SLICE_X + (SLICE_W * before) / total
+          const w0 = (SLICE_W * amt) / total
+          const y0 = BAR.top - 12
+          const x1 = PILL.left
+          const y1 = CARD_TOP + i * CARD_STEP + PILL.top
+          const t = sp(f, goesAt + i * 4, { damping: 15, stiffness: 150 })
           return (
-            <div key={st.t} className="absolute flex flex-col items-center" style={{ left: x - 80, width: 160, top: METRO_Y - 40 }}>
-              <span className="flex items-center justify-center rounded-full" style={{ width: 80, height: 80, border: `5px solid ${INK}`, background: reached ? C.marigold : '#fff' }}>
-                <Icon size={38} strokeWidth={2.6} color={INK} />
-              </span>
-              <span className="font-display font-extrabold" style={{ fontSize: 28, marginTop: 8, color: i === STATIONS.length - 1 && reached ? C.mint : INK }}>{st.t}</span>
+            <div
+              key={i}
+              className="absolute flex items-center justify-center font-display font-extrabold"
+              style={{
+                left: x0 + (x1 - x0) * t,
+                top: y0 + (y1 - y0) * t,
+                width: w0 + (PILL.w - w0) * t,
+                height: BAR.h + (PILL.h - BAR.h) * t,
+                borderRadius: 8 + 21 * Math.min(1, t),
+                background: C.marigold,
+                border: `4px solid ${INK}`,
+                boxShadow: `${4 * t}px ${4 * t}px 0 ${INK}`,
+                fontSize: 30,
+                color: INK,
+                zIndex: 10,
+              }}
+            >
+              <span style={{ opacity: ramp(t, [0.75, 1]) }}>{rupees(amt)}</span>
             </div>
           )
         })}
-        <div className="absolute" style={{ left: METRO_X0 + (METRO_X1 - METRO_X0) * ride - 36, top: METRO_Y - 112, opacity: f >= trackAt ? 1 : 0 }}>
-          <Coin size={72} spin={ride * 360} />
-        </div>
-      </div>
 
       {projects.map((p, i) => (
         <Sfx key={p.id} at={pickAt + i * 7} name="tick" volume={0.35} />
       ))}
-      <Sfx at={alreadyAt} name="stamp" volume={0.45} />
-      <Sfx at={trackAt + 2} name="coin" volume={0.35} />
-      <Sfx at={trackAt + 30} name="ding" volume={0.35} />
+      <Sfx at={sliceAt} name="rip" volume={0.4} />
+      <Sfx at={alreadyAt} name="stamp" volume={0.4} />
+      {SPLIT.map((_, i) => (
+        <Sfx key={i} at={goesAt + i * 4 + 8} name="coin" volume={0.3} />
+      ))}
+      <Sfx at={trackAt + 30} name="ding" volume={0.3} />
     </Bg>
   )
 }
